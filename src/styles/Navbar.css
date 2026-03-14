@@ -1,0 +1,93 @@
+/* =========================================================
+   NAVBAR STYLES
+   Positioned absolutely over the hero so the background image
+   shows through. Uses a subtle dark overlay for readability.
+   ========================================================= */
+
+.navbar {
+  /* Sit on top of the hero section */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+
+  /* Horizontal layout: logo on the left, links on the right */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 20px 48px;
+}
+
+/* --- Logo --- */
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar__logo-text {
+  font-size: 1.125rem;  /* 18px */
+  font-weight: 700;
+  color: var(--color-white);
+  letter-spacing: -0.01em;
+}
+
+/* --- Nav Link List --- */
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+}
+
+/* --- Individual Nav Item wrapper (needed for the active dot) --- */
+.navbar__item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+/* --- Nav Link text --- */
+.navbar__link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  font-size: 0.9375rem; /* 15px */
+  font-weight: 500;
+  color: var(--color-white);
+  opacity: 0.85;
+
+  transition: opacity var(--transition-base);
+  white-space: nowrap;
+}
+
+.navbar__link:hover {
+  opacity: 1;
+}
+
+/* Active link is fully opaque */
+.navbar__link--active {
+  opacity: 1;
+  font-weight: 600;
+}
+
+/* --- Chevron icon next to "Relocation" --- */
+.navbar__chevron {
+  display: flex;
+  align-items: center;
+  opacity: 0.7;
+}
+
+/* --- Active indicator dot beneath the active link --- */
+.navbar__active-dot {
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-white);
+}

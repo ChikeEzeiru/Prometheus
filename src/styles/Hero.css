@@ -1,0 +1,250 @@
+/* =========================================================
+   HERO STYLES
+   Full-viewport section with a photo background, overlay,
+   headline copy, social proof, and the quote quick-form.
+   ========================================================= */
+
+/* --- Section wrapper --- */
+.hero {
+  position: relative;       /* Allows absolute children (overlay, content) */
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-end;    /* Push content toward the bottom of the section */
+
+  /* Background photo – replace the URL with your own image asset.
+     The image should be placed in /public/images/hero-bg.jpg       */
+  background-image: url('/images/hero-bg.jpg');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+/* --- Dark gradient overlay ---
+   Fades from near-transparent at the top to a darker tone at
+   the bottom so the white text and form remain legible.          */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(0, 0, 0, 0.55) 60%,
+    rgba(0, 0, 0, 0.72) 100%
+  );
+  z-index: 1;
+}
+
+/* --- Content column ---
+   Positioned above the overlay (z-index: 2).
+   Left-aligned with padding so it doesn't hug the edge.          */
+.hero__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 48px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* --- Headline --- */
+.hero__headline {
+  font-size: clamp(2.5rem, 5.5vw, 4.25rem); /* Fluid size: shrinks on mobile */
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  color: var(--color-white);
+  max-width: 700px;
+}
+
+/* --- Sub-headline --- */
+.hero__subheadline {
+  font-size: 1.125rem; /* 18px */
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 420px;
+}
+
+/* =========================================================
+   SOCIAL PROOF ROW
+   ========================================================= */
+.hero__social-proof {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* --- Avatar stack --- */
+.avatar-stack {
+  display: flex;
+  flex-direction: row-reverse; /* Stacks so the first avatar appears on the left */
+}
+
+.avatar-stack__item {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  margin-left: -10px; /* Negative margin creates the overlapping effect */
+  flex-shrink: 0;
+}
+
+/* Undo negative margin on the last (rightmost) avatar */
+.avatar-stack__item:last-child {
+  margin-left: 0;
+}
+
+/* --- Star rating --- */
+.hero__rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.star-rating {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.hero__rating-score {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--color-white);
+}
+
+/* --- "loved by…" copy --- */
+.hero__review-copy {
+  font-size: 0.875rem; /* 14px */
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* =========================================================
+   QUOTE FORM
+   Single horizontal row of fields + CTA button.
+   ========================================================= */
+.hero__form {
+  display: flex;
+  align-items: flex-end;  /* Align inputs and button on the same baseline */
+  gap: 8px;
+  flex-wrap: wrap;        /* Wraps to a column on narrow viewports */
+  margin-top: 8px;
+}
+
+/* --- Individual field wrapper (label + input) --- */
+.hero__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1 1 200px;        /* Grows equally; min width prevents cramping */
+}
+
+/* --- Field label row --- */
+.hero__field-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8125rem; /* 13px */
+  font-weight: 500;
+  color: var(--color-white);
+}
+
+/* --- Input / Select wrapper (provides white card background) --- */
+.hero__input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--color-white);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  height: 50px;
+}
+
+/* --- Text inputs --- */
+.hero__input {
+  flex: 1;
+  font-size: 0.9375rem;
+  color: var(--color-gray-900);
+}
+
+.hero__input::placeholder {
+  color: var(--color-gray-400);
+}
+
+/* --- Select dropdown wrapper — extra styling to show native arrow --- */
+.hero__input-wrapper--select {
+  /* Remove the left pin icon padding since select doesn't need it */
+  padding-right: 8px;
+}
+
+.hero__select {
+  flex: 1;
+  font-size: 0.9375rem;
+  color: var(--color-gray-400); /* Placeholder colour */
+  background: transparent;
+  cursor: pointer;
+  /* Keep native dropdown arrow visible */
+  appearance: auto;
+}
+
+.hero__select:focus {
+  color: var(--color-gray-900);
+}
+
+/* Show selected value in dark colour */
+.hero__select option {
+  color: var(--color-gray-900);
+}
+
+/* --- CTA Button --- */
+.hero__cta {
+  flex-shrink: 0;
+  height: 50px;
+  padding: 0 28px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  transition: background-color var(--transition-base), transform var(--transition-base);
+
+  /* Align button bottom with inputs */
+  align-self: flex-end;
+}
+
+.hero__cta:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-1px);
+}
+
+.hero__cta:active {
+  transform: translateY(0);
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 768px) {
+  .hero__content {
+    padding: 0 24px 48px;
+  }
+
+  /* Stack form fields vertically on mobile */
+  .hero__form {
+    flex-direction: column;
+  }
+
+  .hero__field {
+    flex: 1 1 100%;
+  }
+
+  .hero__cta {
+    width: 100%;
+    align-self: stretch;
+  }
+}
