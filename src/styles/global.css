@@ -23,7 +23,7 @@
   --color-star: #f59e0b;
 
   /* Typography */
-  --font-family: 'Inter', sans-serif;
+  --font-family: 'Plus Jakarta Sans', sans-serif;
 
   /* Spacing scale */
   --space-xs: 4px;
@@ -58,6 +58,22 @@ body {
   background-color: var(--color-white);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+}
+
+/* --- Section wrapper ---
+   Apply to every non-hero section for consistent vertical rhythm. */
+.section {
+  padding-block: 6rem;
+}
+
+/* --- Inner container ---
+   Shared utility for all section inner wrappers.
+   Constrains content width and provides consistent horizontal padding. */
+.container {
+  width: 100%;
+  max-width: 1216px;
+  margin-inline: auto;
+  padding-inline: 32px;
 }
 
 /* --- Anchor reset --- */

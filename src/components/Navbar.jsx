@@ -1,40 +1,13 @@
 // =========================================================
 // NAVBAR COMPONENT
-// Sticky top navigation bar with the Prometheus logo,
-// primary nav links, and a "Relocation" dropdown trigger.
+// Fixed top navigation. Transparent over hero; switches to
+// a frosted light background once the user scrolls down.
 // =========================================================
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import '../styles/Navbar.css'
 
-// --- Logo Icon ---
-// SVG representation of the Prometheus brand mark (pink square with
-// a stylised lightning-bolt / "P" glyph).
-function LogoIcon() {
-  return (
-    <svg
-      width="32"
-      height="32"
-      viewBox="0 0 32 32"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      {/* Rounded pink/red square background */}
-      <rect width="32" height="32" rx="8" fill="#E8194B" />
-      {/* Stylised lightning-bolt glyph in white */}
-      <path
-        d="M19 5L11 18h6l-2 9 10-14h-6l2-8z"
-        fill="white"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
 // --- Chevron Icon ---
-// Downward-pointing chevron used beside the "Relocation" nav link
-// to signal a dropdown menu.
 function ChevronDown() {
   return (
     <svg
@@ -57,9 +30,6 @@ function ChevronDown() {
 }
 
 // --- Navigation link definitions ---
-// Each entry has a label, href, and optional flags.
-// "hasDropdown" renders the chevron icon next to the label.
-// "active" applies the active indicator dot beneath the link.
 const NAV_LINKS = [
   { label: 'Home',        href: '#',           active: true  },
   { label: 'Relocation',  href: '#relocation', hasDropdown: true },
@@ -72,46 +42,56 @@ const NAV_LINKS = [
 // Navbar
 // =========================================================
 export default function Navbar() {
-  // Track which nav link is currently active (by label)
   const [activeLink, setActiveLink] = useState('Home')
+  const [scrolled, setScrolled]     = useState(false)
+
+  // Switch to light background once the user scrolls past the hero
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
-    // Outer wrapper – sits above the hero and uses a dark
-    // semi-transparent background so the hero image shows through.
-    <nav className="navbar" role="navigation" aria-label="Main navigation">
+    <nav
+      className={`navbar${scrolled ? ' navbar--scrolled' : ''}`}
+      role="navigation"
+      aria-label="Main navigation"
+    >
+      <div className="container navbar__inner">
 
-      {/* ── Brand / Logo ── */}
-      <a href="/" className="navbar__logo" aria-label="Prometheus home">
-        <LogoIcon />
-        <span className="navbar__logo-text">Prometheus</span>
-      </a>
+        {/* ── Brand / Logo ── */}
+        <a href="/" className="navbar__logo" aria-label="Prometheus home">
+          <img src="/logomark.svg" width="38" height="38" alt="" aria-hidden="true" />
+          <span className="navbar__logo-text">Prometheus</span>
+        </a>
 
-      {/* ── Nav Links ── */}
-      <ul className="navbar__links" role="list">
-        {NAV_LINKS.map(({ label, href, hasDropdown, active }) => (
-          <li key={label} className="navbar__item">
-            <a
-              href={href}
-              className={`navbar__link ${activeLink === label ? 'navbar__link--active' : ''}`}
-              onClick={() => setActiveLink(label)}
-              aria-current={activeLink === label ? 'page' : undefined}
-            >
-              {label}
-              {/* Render dropdown chevron for links that have sub-menus */}
-              {hasDropdown && (
-                <span className="navbar__chevron">
-                  <ChevronDown />
-                </span>
+        {/* ── Nav Links ── */}
+        <ul className="navbar__links" role="list">
+          {NAV_LINKS.map(({ label, href, hasDropdown }) => (
+            <li key={label} className="navbar__item">
+              <a
+                href={href}
+                className={`navbar__link ${activeLink === label ? 'navbar__link--active' : ''}`}
+                onClick={() => setActiveLink(label)}
+                aria-current={activeLink === label ? 'page' : undefined}
+              >
+                {label}
+                {hasDropdown && (
+                  <span className="navbar__chevron">
+                    <ChevronDown />
+                  </span>
+                )}
+              </a>
+
+              {activeLink === label && (
+                <span className="navbar__active-dot" aria-hidden="true" />
               )}
-            </a>
+            </li>
+          ))}
+        </ul>
 
-            {/* Active indicator dot rendered below the active link */}
-            {activeLink === label && (
-              <span className="navbar__active-dot" aria-hidden="true" />
-            )}
-          </li>
-        ))}
-      </ul>
+      </div>
     </nav>
   )
 }

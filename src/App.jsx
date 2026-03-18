@@ -6,22 +6,18 @@
 // =========================================================
 
 import React from 'react'
-import Navbar from './components/Navbar'
-import Hero   from './components/Hero'
+import Navbar    from './components/Navbar'
+import Hero      from './components/Hero'
+import Services  from './components/Services'
+import Features  from './components/Features'
 
 export default function App() {
   return (
     <>
-      {/* ── Navigation ──
-          Absolutely positioned over the Hero so it floats
-          on top of the background image.                   */}
       <Navbar />
-
-      {/* ── Hero / Landing Section ── */}
       <Hero />
-
-      {/* Additional sections (Services, About, Testimonials,
-          Blog, Footer) will be added here as designs come in. */}
+      <Services />
+      <Features />
     </>
   )
 }

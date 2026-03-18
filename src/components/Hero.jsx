@@ -102,19 +102,24 @@ function StarRating({ rating = 4.52, max = 5 }) {
 }
 
 // --- Avatar Stack ---
-// Displays a row of overlapping circular avatars representing
-// previous customers. Uses placeholder coloured circles since
-// real photos are not available at build time.
-const AVATAR_COLORS = ['#f472b6', '#60a5fa', '#34d399', '#fbbf24', '#a78bfa']
+const AVATARS = [
+  '/avatars/avatar-1.svg',
+  '/avatars/avatar-2.svg',
+  '/avatars/avatar-3.svg',
+  '/avatars/avatar-4.svg',
+  '/avatars/avatar-5.svg',
+]
 
-function AvatarStack({ count = 5 }) {
+function AvatarStack() {
   return (
-    <div className="avatar-stack" aria-label={`${count} customer avatars`}>
-      {AVATAR_COLORS.slice(0, count).map((color, i) => (
-        <div
+    <div className="avatar-stack" aria-label="Customer avatars">
+      {AVATARS.map((src, i) => (
+        <img
           key={i}
+          src={src}
           className="avatar-stack__item"
-          style={{ backgroundColor: color, zIndex: count - i }}
+          style={{ zIndex: AVATARS.length - i }}
+          alt=""
           aria-hidden="true"
         />
       ))}
@@ -148,13 +153,21 @@ export default function Hero() {
   }
 
   return (
-    // Outer section fills the full viewport height.
-    // The background image is set via CSS so it can be swapped
-    // easily without touching JS.
     <section className="hero" aria-labelledby="hero-heading">
 
+      {/* ── Background video ── */}
+      <video
+        className="hero__video"
+        src="/videos/hero-bg.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+        aria-hidden="true"
+      />
+
       {/* ── Dark gradient overlay ──
-          Improves text contrast over the photo background. */}
+          Improves text contrast over the video background. */}
       <div className="hero__overlay" aria-hidden="true" />
 
       {/* ── Main content column ──
@@ -174,16 +187,18 @@ export default function Hero() {
         {/* ── Social proof row ──
             Avatar stack + star rating + review count copy */}
         <div className="hero__social-proof">
-          <AvatarStack count={5} />
+          <AvatarStack />
 
-          <div className="hero__rating">
-            <StarRating rating={4.52} />
-            <span className="hero__rating-score">4.52</span>
+          <div className="hero__social-proof__meta">
+            <div className="hero__rating">
+              <StarRating rating={4.52} />
+              <span className="hero__rating-score">4.52</span>
+            </div>
+
+            <p className="hero__review-copy">
+              loved by over 300 customers
+            </p>
           </div>
-
-          <p className="hero__review-copy">
-            loved by over 300 customers
-          </p>
         </div>
 
         {/* ── Quote Form ──
