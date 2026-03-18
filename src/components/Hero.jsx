@@ -8,31 +8,9 @@
 //   • "Get a Quote" quick-form (location inputs + relocation type)
 // =========================================================
 
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import '../styles/Hero.css'
-
-// --- Location Pin Icon ---
-// Rendered inside each location text input as a visual hint.
-function PinIcon() {
-  return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path
-        d="M8 1.5A4.5 4.5 0 0 0 3.5 6c0 3 4.5 8.5 4.5 8.5S12.5 9 12.5 6A4.5 4.5 0 0 0 8 1.5z"
-        stroke="#9ca3af"
-        strokeWidth="1.25"
-        strokeLinejoin="round"
-      />
-      <circle cx="8" cy="6" r="1.5" stroke="#9ca3af" strokeWidth="1.25" />
-    </svg>
-  )
-}
+import LocationCombobox from './LocationCombobox'
 
 // --- Question-mark (Help) Icon ---
 // Displayed beside each form field label to hint that a tooltip
@@ -127,14 +105,106 @@ function AvatarStack() {
   )
 }
 
-// --- Relocation type options for the dropdown ---
+// --- Relocation type options ---
 const RELOCATION_TYPES = [
   'Home Relocation',
   'Office Relocation',
-  'Inter-state Relocation',
-  'Furniture Delivery',
-  'Item Storage',
+  'Fragile Items',
+  'Truck Rentals',
 ]
+
+// --- Chevron icon for the custom select trigger ---
+function ChevronIcon({ open }) {
+  return (
+    <svg
+      width="16" height="16" viewBox="0 0 16 16" fill="none"
+      xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+      style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 200ms ease', flexShrink: 0 }}
+    >
+      <path d="M4 6l4 4 4-4" stroke="#9ca3af" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
+// --- Custom relocation-type select (matches location input card style) ---
+function RelocationSelect({ id, value, onChange }) {
+  const [open, setOpen] = useState(false)
+  const wrapperRef = useRef(null)
+
+  useEffect(() => {
+    function onPointerDown(e) {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('pointerdown', onPointerDown)
+    return () => document.removeEventListener('pointerdown', onPointerDown)
+  }, [])
+
+  function pick(type) {
+    onChange(type)
+    setOpen(false)
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === 'Escape') setOpen(false)
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpen(o => !o) }
+  }
+
+  return (
+    <div className="relocation-select" ref={wrapperRef}>
+      {/* ── Trigger ── */}
+      <div
+        id={id}
+        className="hero__input-wrapper relocation-select__trigger"
+        role="combobox"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-required="true"
+        tabIndex={0}
+        onClick={() => setOpen(o => !o)}
+        onKeyDown={handleKeyDown}
+      >
+        <span className={value ? 'relocation-select__value' : 'relocation-select__placeholder'}>
+          {value || 'e.g. Home Relocation'}
+        </span>
+        <ChevronIcon open={open} />
+      </div>
+
+      {/* ── Options panel ── */}
+      {open && (
+        <ul className="relocation-select__options" role="listbox">
+          {RELOCATION_TYPES.map(type => {
+            const selected = type === value
+            return (
+              <li
+                key={type}
+                role="option"
+                aria-selected={selected}
+                className={
+                  'relocation-select__option' +
+                  (selected ? ' relocation-select__option--selected' : '')
+                }
+                onMouseDown={() => pick(type)}
+              >
+                <span className="relocation-select__option-label">{type}</span>
+                {selected && (
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+                    className="relocation-select__check">
+                    <path d="M3 8l3.5 3.5L13 5"
+                      stroke="var(--color-primary)" strokeWidth="1.75"
+                      strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                )}
+              </li>
+            )
+          })}
+        </ul>
+      )}
+    </div>
+  )
+}
 
 // =========================================================
 // Hero
@@ -155,20 +225,20 @@ export default function Hero() {
   return (
     <section className="hero" aria-labelledby="hero-heading">
 
-      {/* ── Background video ── */}
-      <video
-        className="hero__video"
-        src="/videos/hero-bg.mp4"
-        autoPlay
-        loop
-        muted
-        playsInline
-        aria-hidden="true"
-      />
-
-      {/* ── Dark gradient overlay ──
-          Improves text contrast over the video background. */}
-      <div className="hero__overlay" aria-hidden="true" />
+      {/* ── Background (video + overlay) ──
+          Wrapped in its own div so overflow:hidden only clips
+          the media, leaving form dropdowns free to overflow. */}
+      <div className="hero__bg" aria-hidden="true">
+        <video
+          className="hero__video"
+          src="/videos/hero-bg.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
+        <div className="hero__overlay" />
+      </div>
 
       {/* ── Main content column ──
           Positioned in the lower-left quadrant of the section. */}
@@ -211,18 +281,12 @@ export default function Hero() {
             <label className="hero__field-label" htmlFor="current-location">
               Current Location <HelpIcon />
             </label>
-            <div className="hero__input-wrapper">
-              <PinIcon />
-              <input
-                id="current-location"
-                type="text"
-                className="hero__input"
-                placeholder="e.g. Mafoluku, Oshodi"
-                value={currentLocation}
-                onChange={(e) => setCurrentLocation(e.target.value)}
-                aria-required="true"
-              />
-            </div>
+            <LocationCombobox
+              id="current-location"
+              placeholder="e.g. Mafoluku, Oshodi"
+              value={currentLocation}
+              onChange={setCurrentLocation}
+            />
           </div>
 
           {/* New Location */}
@@ -230,39 +294,24 @@ export default function Hero() {
             <label className="hero__field-label" htmlFor="new-location">
               New Location <HelpIcon />
             </label>
-            <div className="hero__input-wrapper">
-              <PinIcon />
-              <input
-                id="new-location"
-                type="text"
-                className="hero__input"
-                placeholder="e.g. Gbagada"
-                value={newLocation}
-                onChange={(e) => setNewLocation(e.target.value)}
-                aria-required="true"
-              />
-            </div>
+            <LocationCombobox
+              id="new-location"
+              placeholder="e.g. Gbagada"
+              value={newLocation}
+              onChange={setNewLocation}
+            />
           </div>
 
-          {/* Type of Relocation – dropdown */}
+          {/* Type of Relocation – custom select */}
           <div className="hero__field">
             <label className="hero__field-label" htmlFor="relocation-type">
               Type of Relocation <HelpIcon />
             </label>
-            <div className="hero__input-wrapper hero__input-wrapper--select">
-              <select
-                id="relocation-type"
-                className="hero__select"
-                value={relocationType}
-                onChange={(e) => setRelocationType(e.target.value)}
-                aria-required="true"
-              >
-                <option value="" disabled>e.g. Home Relocation</option>
-                {RELOCATION_TYPES.map((type) => (
-                  <option key={type} value={type}>{type}</option>
-                ))}
-              </select>
-            </div>
+            <RelocationSelect
+              id="relocation-type"
+              value={relocationType}
+              onChange={setRelocationType}
+            />
           </div>
 
           {/* CTA Button */}

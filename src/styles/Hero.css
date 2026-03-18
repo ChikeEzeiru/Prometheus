@@ -7,27 +7,35 @@
 /* --- Section wrapper --- */
 .hero {
   position: relative;
+  z-index: 1;               /* Lets dropdown panels paint above subsequent sections */
   min-height: 100vh;
   display: flex;
   align-items: flex-end;    /* Push content toward the bottom of the section */
-  overflow: hidden;
   background-color: #000;   /* Fallback while video loads */
+}
+
+/* --- Background container ---
+   overflow:hidden lives here so it clips only the video/overlay,
+   never the absolutely-positioned form dropdowns. */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
 }
 
 /* --- Background video --- */
 .hero__video {
-  position: absolute;
-  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  z-index: 0;
+  display: block;
 }
 
 /* --- Dark gradient overlay ---
-   Fades from near-transparent at the top to a darker tone at
-   the bottom so the white text and form remain legible.          */
+   Sits inside .hero__bg (which is already position:absolute),
+   so this just needs to stretch over the video below it.         */
 .hero__overlay {
   position: absolute;
   inset: 0;
@@ -37,7 +45,6 @@
     rgba(0, 0, 0, 0.55) 60%,
     rgba(0, 0, 0, 0.72) 100%
   );
-  z-index: 1;
 }
 
 /* --- Content column ---
@@ -186,32 +193,138 @@
   color: var(--color-gray-400);
 }
 
-/* --- Select dropdown wrapper — extra styling to show native arrow --- */
-.hero__input-wrapper--select {
-  /* Remove the left pin icon padding since select doesn't need it */
-  padding-right: 8px;
+/* =========================================================
+   RELOCATION SELECT (custom dropdown)
+   ========================================================= */
+
+.relocation-select {
+  position: relative;
 }
 
-.hero__select {
-  flex: 1;
-  font-size: 0.9375rem;
-  color: var(--color-gray-400); /* Placeholder colour */
-  background: transparent;
+/* Trigger — reuses hero__input-wrapper for the white card look */
+.relocation-select__trigger {
+  justify-content: space-between;
   cursor: pointer;
-  /* Keep native dropdown arrow visible */
-  appearance: auto;
+  user-select: none;
+  outline: none;
 }
 
-.hero__select:focus {
+.relocation-select__trigger:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+.relocation-select__placeholder {
+  font-size: 0.9375rem;
+  color: var(--color-gray-400);
+  flex: 1;
+}
+
+.relocation-select__value {
+  font-size: 0.9375rem;
   color: var(--color-gray-900);
+  flex: 1;
 }
 
-/* Show selected value in dark colour */
-.hero__select option {
-  color: var(--color-gray-900);
+/* Options panel */
+.relocation-select__options {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  list-style: none;
+  z-index: 200;
+  overflow: hidden;
 }
 
-/* --- CTA Button --- */
+/* Individual option */
+.relocation-select__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 14px;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  color: #1F2A37;
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+
+.relocation-select__option-label {
+  flex: 1;
+}
+
+.relocation-select__check {
+  flex-shrink: 0;
+}
+
+.relocation-select__option + .relocation-select__option {
+  border-top: 1px solid #F3F4F6;
+}
+
+.relocation-select__option:hover {
+  background-color: #F9FAFB;
+}
+
+.relocation-select__option--selected {
+  background-color: color-mix(in srgb, var(--color-primary) 8%, transparent);
+}
+
+/* =========================================================
+   LOCATION COMBOBOX
+   ========================================================= */
+
+/* Positioning context for the absolute dropdown */
+.location-combobox {
+  position: relative;
+}
+
+/* The input row inherits hero__input-wrapper styles directly */
+.location-combobox__trigger {
+  width: 100%;
+}
+
+/* Suggestions list */
+.location-combobox__suggestions {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  list-style: none;
+  z-index: 200;
+  overflow: hidden;
+}
+
+/* Individual suggestion row */
+.location-combobox__option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  color: #1F2A37;
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+
+.location-combobox__option + .location-combobox__option {
+  border-top: 1px solid #F3F4F6;
+}
+
+.location-combobox__option:hover,
+.location-combobox__option--active {
+  background-color: #F9FAFB;
+}
+
+/* ─── CTA Button ─── */
+
 .hero__cta {
   flex-shrink: 0;
   height: 50px;

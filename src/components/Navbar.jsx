@@ -1,51 +1,40 @@
 // =========================================================
 // NAVBAR COMPONENT
-// Fixed top navigation. Transparent over hero; switches to
-// a frosted light background once the user scrolls down.
+// Fixed 4.5rem-tall bar. Transparent over hero; switches to
+// frosted light background on scroll.
 // =========================================================
 
 import React, { useState, useEffect } from 'react'
 import '../styles/Navbar.css'
 
-// --- Chevron Icon ---
 function ChevronDown() {
   return (
     <svg
-      width="14"
-      height="14"
-      viewBox="0 0 14 14"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+      width="14" height="14" viewBox="0 0 14 14"
+      fill="none" xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
       <path
         d="M2.5 5l4.5 4.5L11.5 5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        stroke="currentColor" strokeWidth="1.5"
+        strokeLinecap="round" strokeLinejoin="round"
       />
     </svg>
   )
 }
 
-// --- Navigation link definitions ---
 const NAV_LINKS = [
-  { label: 'Home',        href: '#',           active: true  },
-  { label: 'Relocation',  href: '#relocation', hasDropdown: true },
-  { label: 'Storage',     href: '#storage'     },
-  { label: 'Blog',        href: '#blog'        },
-  { label: 'Contact Us',  href: '#contact'     },
+  { label: 'Home',       href: '#'           },
+  { label: 'Relocation', href: '#relocation', hasDropdown: true },
+  { label: 'Storage',    href: '#storage'    },
+  { label: 'Blog',       href: '#blog'       },
+  { label: 'Contact Us', href: '#contact'    },
 ]
 
-// =========================================================
-// Navbar
-// =========================================================
 export default function Navbar() {
   const [activeLink, setActiveLink] = useState('Home')
-  const [scrolled, setScrolled]     = useState(false)
+  const [scrolled,   setScrolled]   = useState(false)
 
-  // Switch to light background once the user scrolls past the hero
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10)
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -60,35 +49,43 @@ export default function Navbar() {
     >
       <div className="container navbar__inner">
 
-        {/* ── Brand / Logo ── */}
-        <a href="/" className="navbar__logo" aria-label="Prometheus home">
-          <img src="/logomark.svg" width="38" height="38" alt="" aria-hidden="true" />
-          <span className="navbar__logo-text">Prometheus</span>
-        </a>
+        {/* ── Brand — logo mark + wordmark centred in their own flex box ── */}
+        <div className="navbar__brand">
+          <a href="/" className="navbar__logo" aria-label="Prometheus home">
+            <img src="/logomark.svg" width="32" height="32" alt="" aria-hidden="true" />
+            <span className="navbar__logo-text">Prometheus</span>
+          </a>
+        </div>
 
-        {/* ── Nav Links ── */}
+        {/* ── Nav links ── */}
         <ul className="navbar__links" role="list">
-          {NAV_LINKS.map(({ label, href, hasDropdown }) => (
-            <li key={label} className="navbar__item">
-              <a
-                href={href}
-                className={`navbar__link ${activeLink === label ? 'navbar__link--active' : ''}`}
-                onClick={() => setActiveLink(label)}
-                aria-current={activeLink === label ? 'page' : undefined}
-              >
-                {label}
-                {hasDropdown && (
-                  <span className="navbar__chevron">
-                    <ChevronDown />
+          {NAV_LINKS.map(({ label, href, hasDropdown }) => {
+            const isActive = activeLink === label
+            return (
+              <li key={label} className="navbar__item">
+                <a
+                  href={href}
+                  className={`navbar__link${isActive ? ' navbar__link--active' : ''}`}
+                  onClick={() => setActiveLink(label)}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  {/* Top row: text + optional chevron */}
+                  <span className="navbar__link-label">
+                    {label}
+                    {hasDropdown && (
+                      <span className="navbar__chevron"><ChevronDown /></span>
+                    )}
                   </span>
-                )}
-              </a>
 
-              {activeLink === label && (
-                <span className="navbar__active-dot" aria-hidden="true" />
-              )}
-            </li>
-          ))}
+                  {/* Pill — always rendered; visible only when active */}
+                  <span
+                    className={`navbar__pill${isActive ? ' navbar__pill--visible' : ''}`}
+                    aria-hidden="true"
+                  />
+                </a>
+              </li>
+            )
+          })}
         </ul>
 
       </div>

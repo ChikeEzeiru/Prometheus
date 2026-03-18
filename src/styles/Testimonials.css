@@ -1,0 +1,140 @@
+/* =========================================================
+   TESTIMONIALS — dark-bg section with edge-to-edge marquee
+   ========================================================= */
+
+.testimonials {
+  background-color: #1F2A37;
+  padding-block: 6rem;
+  overflow: hidden;
+}
+
+/* ── Section header ── */
+.testimonials__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
+  margin-bottom: 56px;
+}
+
+.testimonials__eyebrow {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #FD6F8E;
+}
+
+.testimonials__heading {
+  font-size: 2.25rem;
+  font-weight: 600;
+  line-height: 1.22;
+  color: #FCFCFD;
+  max-width: 640px;
+}
+
+.testimonials__subheading {
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #9DA4AE;
+  width: max-content;
+  max-width: 100%;
+}
+
+/* ── Marquee viewport ──
+   Edge fade: clamp() scales the transparent band linearly
+   from 1.25rem at ≤440px to 4.75rem at ≥1440px.
+   Formula derived: fade = clamp(1.25rem, calc(-0.29rem + 5.6vw), 4.75rem) */
+.testimonials__viewport {
+  width: 100%;
+  overflow: hidden;
+
+  --fade: clamp(1.25rem, calc(-0.29rem + 5.6vw), 4.75rem);
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black var(--fade),
+    black calc(100% - var(--fade)),
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black var(--fade),
+    black calc(100% - var(--fade)),
+    transparent 100%
+  );
+}
+
+/* ── Scrolling track ──
+   JS handles pause/resume via Web Animations API playbackRate.
+   No CSS hover rule needed here.                              */
+.testimonials__track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: testimonials-scroll 40s linear infinite;
+}
+
+@keyframes testimonials-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ── Individual card ── */
+.testimonials__card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 300px;
+  flex-shrink: 0;
+
+  background-color: rgba(56, 66, 80, 0.375);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 28px 24px 24px;
+}
+
+.testimonials__quote-mark {
+  color: rgba(255, 255, 255, 0.12);
+  flex-shrink: 0;
+}
+
+.testimonials__card-title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #FCFCFD;
+}
+
+.testimonials__card-body {
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #9CA3AF;
+  flex: 1;
+}
+
+/* ── Card footer ── */
+.testimonials__card-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.testimonials__card-name {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #FCFCFD;
+}
+
+.testimonials__card-location {
+  font-size: 0.875rem;
+  font-weight: 400;
+  font-style: italic;
+  color: #6B7280;
+}
