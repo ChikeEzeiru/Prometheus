@@ -130,14 +130,16 @@
 }
 
 .hero__rating-score {
-  font-size: 0.9375rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
   font-weight: 700;
   color: var(--color-white);
 }
 
 /* --- "loved by…" copy --- */
 .hero__review-copy {
-  font-size: 0.875rem; /* 14px */
+  font-size: 0.75rem;
+  line-height: 1.5;
   color: rgba(255, 255, 255, 0.8);
 }
 
@@ -166,9 +168,58 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 0.8125rem; /* 13px */
+  font-size: 0.875rem;
+  line-height: 1.43;
   font-weight: 500;
   color: var(--color-white);
+}
+
+/* --- Field tooltip ---
+   Wraps the "?" SVG icon. The bubble appears above it on hover/focus. */
+.field-tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: default;
+  /* Tabbable so keyboard users can trigger the tooltip */
+  outline: none;
+}
+
+.field-tooltip__bubble {
+  position: absolute;
+  bottom: calc(100% + 9px);
+  left: 50%;
+  transform: translateX(-50%);
+  /* Dark pill */
+  background-color: #1F2A37;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.45;
+  white-space: nowrap;
+  padding: 5px 10px;
+  border-radius: 6px;
+  /* Hidden until hover/focus */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 140ms ease;
+  z-index: 300;
+}
+
+/* Downward arrow */
+.field-tooltip__bubble::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #1F2A37;
+}
+
+.field-tooltip:hover .field-tooltip__bubble,
+.field-tooltip:focus .field-tooltip__bubble {
+  opacity: 1;
 }
 
 /* --- Input / Select wrapper (provides white card background) --- */
@@ -178,8 +229,8 @@
   gap: 8px;
   background-color: var(--color-white);
   border-radius: var(--radius-sm);
-  padding: 12px 14px;
-  height: 50px;
+  padding: 0 14px;
+  height: 2.75rem;
 }
 
 /* --- Text inputs --- */
@@ -327,7 +378,7 @@
 
 .hero__cta {
   flex-shrink: 0;
-  height: 50px;
+  height: 2.75rem;
   padding: 0 28px;
   background-color: var(--color-primary);
   color: var(--color-white);

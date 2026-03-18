@@ -11,33 +11,37 @@
 import React, { useState, useRef, useEffect } from 'react'
 import '../styles/Hero.css'
 import LocationCombobox from './LocationCombobox'
+import QuoteModal from './QuoteModal'
 
-// --- Question-mark (Help) Icon ---
-// Displayed beside each form field label to hint that a tooltip
-// or help popover is available.
-function HelpIcon() {
+// --- Field Tooltip ---
+// Wraps the "?" icon and shows a brief hint bubble on hover/focus.
+// Pass a `tip` string for the tooltip copy.
+function FieldTooltip({ tip }) {
   return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 14 14"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <circle cx="7" cy="7" r="6" stroke="#9ca3af" strokeWidth="1.2" />
-      <text
-        x="7"
-        y="10.5"
-        textAnchor="middle"
-        fontSize="8"
-        fill="#9ca3af"
-        fontFamily="Inter, sans-serif"
-        fontWeight="600"
+    <span className="field-tooltip" tabIndex={0} aria-label={tip}>
+      <svg
+        width="14"
+        height="14"
+        viewBox="0 0 14 14"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
       >
-        ?
-      </text>
-    </svg>
+        <circle cx="7" cy="7" r="6" stroke="#9ca3af" strokeWidth="1.2" />
+        <text
+          x="7"
+          y="10.5"
+          textAnchor="middle"
+          fontSize="8"
+          fill="#9ca3af"
+          fontFamily="Inter, sans-serif"
+          fontWeight="600"
+        >
+          ?
+        </text>
+      </svg>
+      <span className="field-tooltip__bubble" role="tooltip">{tip}</span>
+    </span>
   )
 }
 
@@ -215,14 +219,17 @@ export default function Hero() {
   const [newLocation, setNewLocation]         = useState('')
   const [relocationType, setRelocationType]   = useState('')
 
-  // Handle quote form submission
+  // Quote modal visibility
+  const [showQuote, setShowQuote] = useState(false)
+
+  // Open the quote modal with the current hero field values pre-filled
   function handleGetQuote(e) {
     e.preventDefault()
-    // TODO: wire up to backend / booking flow
-    console.log({ currentLocation, newLocation, relocationType })
+    setShowQuote(true)
   }
 
   return (
+    <>
     <section className="hero" aria-labelledby="hero-heading">
 
       {/* ── Background (video + overlay) ──
@@ -279,7 +286,7 @@ export default function Hero() {
           {/* Current Location */}
           <div className="hero__field">
             <label className="hero__field-label" htmlFor="current-location">
-              Current Location <HelpIcon />
+              Current Location <FieldTooltip tip="Your current address or area in Lagos" />
             </label>
             <LocationCombobox
               id="current-location"
@@ -292,7 +299,7 @@ export default function Hero() {
           {/* New Location */}
           <div className="hero__field">
             <label className="hero__field-label" htmlFor="new-location">
-              New Location <HelpIcon />
+              New Location <FieldTooltip tip="The area or address you are moving to in Lagos" />
             </label>
             <LocationCombobox
               id="new-location"
@@ -305,7 +312,7 @@ export default function Hero() {
           {/* Type of Relocation – custom select */}
           <div className="hero__field">
             <label className="hero__field-label" htmlFor="relocation-type">
-              Type of Relocation <HelpIcon />
+              Type of Relocation <FieldTooltip tip="Choose the kind of move — home, office, fragile items, or a truck rental" />
             </label>
             <RelocationSelect
               id="relocation-type"
@@ -322,5 +329,17 @@ export default function Hero() {
         </form>
       </div>
     </section>
+
+    {/* Quote wizard — rendered as a portal over the whole page */}
+    <QuoteModal
+      isOpen={showQuote}
+      onClose={() => setShowQuote(false)}
+      prefill={{
+        from:      currentLocation,
+        to:        newLocation,
+        moveType:  relocationType,
+      }}
+    />
+    </>
   )
 }
