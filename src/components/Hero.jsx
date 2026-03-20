@@ -213,7 +213,7 @@ function RelocationSelect({ id, value, onChange }) {
 // =========================================================
 // Hero
 // =========================================================
-export default function Hero() {
+export default function Hero({ onBook }) {
   // Controlled state for each form field
   const [currentLocation, setCurrentLocation] = useState('')
   const [newLocation, setNewLocation]         = useState('')
@@ -334,6 +334,7 @@ export default function Hero() {
     <QuoteModal
       isOpen={showQuote}
       onClose={() => setShowQuote(false)}
+      onBook={onBook}
       prefill={{
         from:      currentLocation,
         to:        newLocation,

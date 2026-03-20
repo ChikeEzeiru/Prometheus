@@ -5,7 +5,7 @@
 import React from 'react'
 import '../styles/CTABanner.css'
 
-export default function CTABanner() {
+export default function CTABanner({ onBook }) {
   return (
     <section className="cta-banner" aria-label="Book your move">
       {/* ── Left: dark bg + copy ── */}
@@ -19,9 +19,9 @@ export default function CTABanner() {
             truck — we'll get your belongings there safely, on time,
             every time.
           </p>
-          <a href="#contact" className="cta-banner__btn">
+          <button className="cta-banner__btn" onClick={onBook}>
             Book Your Move Now
-          </a>
+          </button>
         </div>
       </div>
 

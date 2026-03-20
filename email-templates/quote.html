@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Your Prometheus Moving Quote</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+    /* Reset */
+    body, table, td, p, a, li, blockquote {
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust:     100%;
+    }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; display: block; }
+
+    /* Base */
+    body {
+      margin:     0;
+      padding:    0;
+      background: #F3F4F6;
+      font-family: 'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+    }
+
+    /* Responsive */
+    @media only screen and (max-width: 620px) {
+      .email-wrapper  { width: 100% !important; }
+      .email-body     { padding: 0 16px !important; }
+      .detail-label,
+      .detail-value   { display: block !important; width: 100% !important; padding: 4px 0 !important; }
+      .section-title  { font-size: 13px !important; }
+      .hero-title     { font-size: 22px !important; }
+      .quote-amount   { font-size: 28px !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Outer wrapper -->
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F3F4F6; padding: 40px 0;">
+    <tr>
+      <td align="center">
+
+        <!-- Email card -->
+        <table class="email-wrapper" width="600" cellpadding="0" cellspacing="0" border="0"
+          style="background:#ffffff; border-radius:12px; overflow:hidden; border: 1px solid #E5E7EB;">
+
+          <!-- ── Header bar ─────────────────────────────────────────────── -->
+          <tr>
+            <td style="background:#F63D68; padding: 18px 40px;">
+              <table cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="vertical-align:middle; padding-right:10px;">
+                    <img
+                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODEiIGhlaWdodD0iODgiIHZpZXdCb3g9IjAgMCA4MSA4OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgb3BhY2l0eT0iMC44NCI+CjxwYXRoIGQ9Ik0xOS4zMjgzIDMwLjI1MDJINS44OTE5MkMyLjYzODQ2IDMwLjI1MDIgMCAzMi44NzY4IDAgMzYuMTE2OFY0MS4yNTAySDIwLjI1QzI1LjMzMzUgNDEuMjUwMiAyOS40NTQ1IDM3LjE0NjEgMjkuNDU0NSAzMi4wODM1QzI5LjQ1NDUgMjcuMDIwOSAzMy41NzU2IDIyLjkxNjggMzguNjU5MSAyMi45MTY4SDczLjYzNjRDNzcuNzAzMiAyMi45MTY4IDgxIDE5LjYzMzYgODEgMTUuNTgzNVYxMC4wODM1SDM5LjU3OTVDMzMuOTg3NyAxMC4wODM1IDI5LjQ1NDUgMTQuNTk4IDI5LjQ1NDUgMjAuMTY2OEMyOS40NTQ1IDI1LjczNTcgMjQuOTIwMiAzMC4yNTAyIDE5LjMyODMgMzAuMjUwMloiIGZpbGw9IiNGOUZBRkIiLz4KPHBhdGggb3BhY2l0eT0iMC43NSIgZD0iTTE5LjMyODMgNDguNTgzMkg1Ljg5MTkyQzIuNjM4NDYgNDguNTgzMiAwIDUxLjIwOTggMCA1NC40NDk4VjU5LjU4MzJIMjAuMjVDMjUuMzMzNSA1OS41ODMyIDI5LjQ1NDUgNTUuNDc5MSAyOS40NTQ1IDUwLjQxNjVDMjkuNDU0NSA0NS4zNTM5IDMzLjU3NTYgNDEuMjQ5OCAzOC42NTkxIDQxLjI0OThINjIuNTkwOUM2Ni42NTc3IDQxLjI0OTggNjkuOTU0NSAzNy45NjY2IDY5Ljk1NDUgMzMuOTE2NVYyOC40MTY1SDM5LjU3OTVDMzMuOTg3NyAyOC40MTY1IDI5LjQ1NDUgMzIuOTMxIDI5LjQ1NDUgMzguNDk5OEMyOS40NTQ1IDQ0LjA2ODcgMjQuOTIwMiA0OC41ODMyIDE5LjMyODMgNDguNTgzMloiIGZpbGw9IiNGOUZBRkIiLz4KPHBhdGggb3BhY2l0eT0iMC41IiBkPSJNMTkuMzI4MyA2Ni45MTY3SDUuODkxOTJDMi42Mzg0NiA2Ni45MTY3IDAgNjkuNTQzMyAwIDcyLjc4MzNWNzcuOTE2N0gyMC4yNUMyNS4zMzM1IDc3LjkxNjcgMjkuNDU0NSA3My44MTI2IDI5LjQ1NDUgNjguNzVDMjkuNDU0NSA2My42ODc0IDMzLjU3NTYgNTkuNTgzMyAzOC42NTkxIDU5LjU4MzNINTMuMDE4MkM1Ni4yNzE2IDU5LjU4MzMgNTguOTA5MSA1Ni45NTY3IDU4LjkwOTEgNTMuNzE2N1Y0Ni43NUgzOS41Nzk1QzMzLjk4NzcgNDYuNzUgMjkuNDU0NSA1MS4yNjQ1IDI5LjQ1NDUgNTYuODMzM0MyOS40NTQ1IDYyLjQwMjIgMjQuOTIwMiA2Ni45MTY3IDE5LjMyODMgNjYuOTE2N1oiIGZpbGw9IiNGOUZBRkIiLz4KPC9nPgo8L3N2Zz4K"
+                      alt="Prometheus"
+                      width="28"
+                      height="31"
+                      style="display:block; width:28px; height:31px;"
+                    />
+                  </td>
+                  <td style="vertical-align:middle;">
+                    <span style="font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif; font-size:18px; font-weight:700;
+                                 color:#ffffff; letter-spacing:-0.2px;">
+                      Prometheus
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ── Hero section ───────────────────────────────────────────── -->
+          <tr>
+            <td style="padding: 40px 40px 32px; text-align:center; border-bottom:1px solid #F3F4F6;">
+              <!-- Quote icon -->
+              <table cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 20px;">
+                <tr>
+                  <td style="width:56px; height:56px; background:#FFF0F4; border-radius:50%;
+                              text-align:center; vertical-align:middle;">
+                    <img
+                      src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjgiIGhlaWdodD0iMjgiIHZpZXdCb3g9IjAgMCAyOCAyOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNMTYgMi4zMzMzMkg3LjMzMzMzQzYuMjI4NzYgMi4zMzMzMiA1LjMzMzMzIDMuMjI4NzYgNS4zMzMzMyA0LjMzMzMyVjIzLjY2NjdDNS4zMzMzMyAyNC43NzIyIDYuMjI4NzYgMjUuNjY2NyA3LjMzMzMzIDI1LjY2NjdIMjAuNjY2N0MyMS43NzIyIDI1LjY2NjcgMjIuNjY2NyAyNC43NzIyIDIyLjY2NjcgMjMuNjY2N1Y5TDE2IDIuMzMzMzJaIiBzdHJva2U9IiNGNjNENjgiIHN0cm9rZS13aWR0aD0iMS44IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KICA8cGF0aCBkPSJNMTYgMi4zMzMzMlY5SDIyLjY2NjciIHN0cm9rZT0iI0Y2M0Q2OCIgc3Ryb2tlLXdpZHRoPSIxLjgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogIDxwYXRoIGQ9Ik0xOC42NjY3IDE1LjMzMzNIOS4zMzMzMyIgc3Ryb2tlPSIjRjYzRDY4IiBzdHJva2Utd2lkdGg9IjEuOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CiAgPHBhdGggZD0iTTE4LjY2NjcgMTkuNjY2N0g5LjMzMzMzIiBzdHJva2U9IiNGNjNENjgiIHN0cm9rZS13aWR0aD0iMS44IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8cGF0aCBkPSJNMTIgMTFIOS4zMzMzMyIgc3Ryb2tlPSIjRjYzRDY4IiBzdHJva2Utd2lkdGg9IjEuOCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+Cjwvc3ZnPgo="
+                      alt="Quote"
+                      width="28"
+                      height="28"
+                      style="display:block; margin:0 auto; width:28px; height:28px;"
+                    />
+                  </td>
+                </tr>
+              </table>
+
+              <p class="hero-title" style="margin:0 0 8px; font-size:24px; font-weight:700;
+                           color:#1F2A37; font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;">
+                Here's your free quote!
+              </p>
+              <p style="margin:0 0 24px; font-size:15px; color:#6B7280;
+                         font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+                         line-height:1.6; max-width:400px; margin:0 auto 24px;">
+                Hi <strong style="color:#1F2A37;">{{to_name}}</strong> — based on the details
+                you provided, your move will cost approximately:
+              </p>
+
+              <!-- Price range -->
+              <p class="quote-amount" style="margin:0 0 6px; font-size:34px; font-weight:700;
+                           color:#F63D68; font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+                           letter-spacing:-0.5px;">
+                {{quote_amount}}
+              </p>
+              <p style="margin:0; font-size:12px; color:#9DA4AE;
+                         font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;">
+                **final cost may vary based on exact load and timing
+              </p>
+            </td>
+          </tr>
+
+          <!-- ── Move summary ────────────────────────────────────────────── -->
+          <tr>
+            <td class="email-body" style="padding: 32px 40px 0;">
+              <p class="section-title" style="margin:0 0 12px; font-size:11px; font-weight:700;
+                           color:#9DA4AE; letter-spacing:0.08em; text-transform:uppercase;
+                           font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;">
+                Move Summary
+              </p>
+              <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                style="border:1px solid #E5E7EB; border-radius:8px; overflow:hidden;">
+
+                <!-- Reference -->
+                <tr style="border-bottom:1px solid #F3F4F6;">
+                  <td class="detail-label" width="42%" style="padding:12px 16px; font-size:13px;
+                      color:#6B7280; font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+                      background:#F9FAFB; border-right:1px solid #F3F4F6;">
+                    Reference
+                  </td>
+                  <td class="detail-value" style="padding:12px 16px; font-size:13px;
+                      font-weight:600; color:#F63D68;
+                      font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+                      letter-spacing:0.04em;">
+                    {{quote_ref}}
+                  </td>
+                </tr>
+
+                <!-- Moving from -->
+                <tr style="border-bottom:1px solid #F3F4F6;">
+                  <td class="detail-label" width="42%" style="padding:12px 16px; font-size:13px;
+                      color:#6B7280; font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+                      background:#F9FAFB; border-right:1px solid #F3F4F6;">
+                    Moving from
+                  </td>
+                  <td class="detail-value" style="padding:12px 16px; font-size:13px;
+                      font-weight:500; color:#1F2A37;
+                      font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;">
+                    {{from_location}}
+                  </td>
+                </tr>
+
+                <!-- Moving to -->
+                <tr style="border-bottom:1px solid #F3F4F6;">
+                  <td class="detail-label" width="42%" style="padding:12px 16px; font-size:13px;
+                      color:#6B7280; font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+                      background:#F9FAFB; border-right:1px solid #F3F4F6;">
+                    Moving to
+                  </td>
+                  <td class="detail-value" style="padding:12px 16px; font-size:13px;
+                      font-weight:500; color:#1F2A37;
+                      font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;">
+                    {{to_location}}
+                  </td>
+                </tr>
+
+                <!-- Type of move -->
+                <tr style="border-bottom:1px solid #F3F4F6;">
+                  <td class="detail-label" width="42%" style="padding:12px 16px; font-size:13px;
+                      color:#6B7280; font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+                      background:#F9FAFB; border-right:1px solid #F3F4F6;">
+                    Type of move
+                  </td>
+                  <td class="detail-value" style="padding:12px 16px; font-size:13px;
+                      font-weight:500; color:#1F2A37;
+                      font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;">
+                    {{move_type}}
+                  </td>
+                </tr>
+
+                <!-- Space -->
+                <tr style="border-bottom:1px solid #F3F4F6;">
+                  <td class="detail-label" width="42%" style="padding:12px 16px; font-size:13px;
+                      color:#6B7280; font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+                      background:#F9FAFB; border-right:1px solid #F3F4F6;">
+                    Space
+                  </td>
+                  <td class="detail-value" style="padding:12px 16px; font-size:13px;
+                      font-weight:500; color:#1F2A37;
+                      font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;">
+                    {{space_type}}
+                  </td>
+                </tr>
+
+                <!-- Move date -->
+                <tr>
+                  <td class="detail-label" width="42%" style="padding:12px 16px; font-size:13px;
+                      color:#6B7280; font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+                      background:#F9FAFB; border-right:1px solid #F3F4F6;">
+                    Move date
+                  </td>
+                  <td class="detail-value" style="padding:12px 16px; font-size:13px;
+                      font-weight:500; color:#1F2A37;
+                      font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;">
+                    {{move_date}}
+                  </td>
+                </tr>
+
+              </table>
+            </td>
+          </tr>
+
+          <!-- ── Extras ──────────────────────────────────────────────────── -->
+          <tr>
+            <td class="email-body" style="padding: 24px 40px 0;">
+              <p class="section-title" style="margin:0 0 12px; font-size:11px; font-weight:700;
+                           color:#9DA4AE; letter-spacing:0.08em; text-transform:uppercase;
+                           font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;">
+                Extras
+              </p>
+              <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                style="border:1px solid #E5E7EB; border-radius:8px; overflow:hidden;">
+
+                <!-- Packaging -->
+                <tr style="border-bottom:1px solid #F3F4F6;">
+                  <td class="detail-label" width="42%" style="padding:12px 16px; font-size:13px;
+                      color:#6B7280; font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+                      background:#F9FAFB; border-right:1px solid #F3F4F6;">
+                    Extra packaging
+                  </td>
+                  <td class="detail-value" style="padding:12px 16px; font-size:13px;
+                      font-weight:500; color:#1F2A37;
+                      font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;">
+                    {{packaging}}
+                  </td>
+                </tr>
+
+                <!-- Fragile items -->
+                <tr>
+                  <td class="detail-label" width="42%" style="padding:12px 16px; font-size:13px;
+                      color:#6B7280; font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+                      background:#F9FAFB; border-right:1px solid #F3F4F6;">
+                    Fragile items
+                  </td>
+                  <td class="detail-value" style="padding:12px 16px; font-size:13px;
+                      font-weight:500; color:#1F2A37;
+                      font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;">
+                    {{fragile_items}}
+                  </td>
+                </tr>
+
+              </table>
+            </td>
+          </tr>
+
+          <!-- ── Contact on file ────────────────────────────────────────── -->
+          <tr>
+            <td class="email-body" style="padding: 24px 40px 0;">
+              <p class="section-title" style="margin:0 0 12px; font-size:11px; font-weight:700;
+                           color:#9DA4AE; letter-spacing:0.08em; text-transform:uppercase;
+                           font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;">
+                Contact on File
+              </p>
+              <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                style="border:1px solid #E5E7EB; border-radius:8px; overflow:hidden;">
+
+                <!-- Name -->
+                <tr style="border-bottom:1px solid #F3F4F6;">
+                  <td class="detail-label" width="42%" style="padding:12px 16px; font-size:13px;
+                      color:#6B7280; font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+                      background:#F9FAFB; border-right:1px solid #F3F4F6;">
+                    Name
+                  </td>
+                  <td class="detail-value" style="padding:12px 16px; font-size:13px;
+                      font-weight:500; color:#1F2A37;
+                      font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;">
+                    {{to_name}}
+                  </td>
+                </tr>
+
+                <!-- Phone -->
+                <tr style="border-bottom:1px solid #F3F4F6;">
+                  <td class="detail-label" width="42%" style="padding:12px 16px; font-size:13px;
+                      color:#6B7280; font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+                      background:#F9FAFB; border-right:1px solid #F3F4F6;">
+                    Phone
+                  </td>
+                  <td class="detail-value" style="padding:12px 16px; font-size:13px;
+                      font-weight:500; color:#1F2A37;
+                      font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;">
+                    {{phone}}
+                  </td>
+                </tr>
+
+                <!-- Email -->
+                <tr>
+                  <td class="detail-label" width="42%" style="padding:12px 16px; font-size:13px;
+                      color:#6B7280; font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+                      background:#F9FAFB; border-right:1px solid #F3F4F6;">
+                    Email
+                  </td>
+                  <td class="detail-value" style="padding:12px 16px; font-size:13px;
+                      font-weight:500; color:#1F2A37;
+                      font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;">
+                    {{to_email}}
+                  </td>
+                </tr>
+
+              </table>
+            </td>
+          </tr>
+
+          <!-- ── Ready to book callout ───────────────────────────────────── -->
+          <tr>
+            <td class="email-body" style="padding: 24px 40px 0;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0"
+                style="background:#FFF0F4; border-left:3px solid #F63D68;
+                       border-radius:0 6px 6px 0;">
+                <tr>
+                  <td style="padding:16px 20px;">
+                    <p style="margin:0 0 4px; font-size:13px; font-weight:600;
+                               color:#1F2A37; font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;">
+                      Ready to go ahead?
+                    </p>
+                    <p style="margin:0; font-size:13px; color:#6B7280;
+                               font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+                               line-height:1.6;">
+                      This quote is saved against reference <strong style="color:#1F2A37;">{{quote_ref}}</strong>.
+                      When you're ready, click below to begin booking and we'll lock in the details for your move.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ── CTA button ─────────────────────────────────────────────── -->
+          <tr>
+            <td style="padding: 32px 40px 40px; text-align:center;">
+              <table cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;">
+                <tr>
+                  <td style="background:#F63D68; border-radius:6px;">
+                    <a href="{{booking_url}}"
+                       style="display:inline-block; padding:12px 32px; font-size:14px;
+                              font-weight:600; color:#ffffff; text-decoration:none;
+                              font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+                              letter-spacing:0.01em;">
+                      Book My Move
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ── Divider ────────────────────────────────────────────────── -->
+          <tr>
+            <td style="padding: 0 40px;">
+              <div style="height:1px; background:#F3F4F6;"></div>
+            </td>
+          </tr>
+
+          <!-- ── Footer ─────────────────────────────────────────────────── -->
+          <tr>
+            <td style="padding: 24px 40px 32px; text-align:center;">
+              <p style="margin:0 0 6px; font-size:13px; font-weight:600;
+                         color:#1F2A37; font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;">
+                Prometheus Movers
+              </p>
+              <p style="margin:0 0 12px; font-size:12px; color:#9DA4AE;
+                         font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;">
+                Lagos, Nigeria
+              </p>
+              <p style="margin:0; font-size:11px; color:#C4C9D4;
+                         font-family:'Plus Jakarta Sans', Arial, Helvetica, sans-serif;
+                         line-height:1.6;">
+                You're receiving this email because you requested a quote on
+                <a href="https://prometheusmovers.com" style="color:#C4C9D4;">prometheusmovers.com</a>
+              </p>
+            </td>
+          </tr>
+
+        </table>
+        <!-- /Email card -->
+
+      </td>
+    </tr>
+  </table>
+  <!-- /Outer wrapper -->
+
+</body>
+</html>

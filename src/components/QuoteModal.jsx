@@ -41,44 +41,44 @@ function getZone(loc) {
 // + optional packaging & fragile addons + urgency modifier
 
 const BASE_PRICE = {
-  'home-relocation':   55_000,
-  'office-relocation': 85_000,
-  'fragile-items':     45_000,
-  'truck-rentals':     40_000,
+  'home-relocation':   100_000,
+  'office-relocation': 150_000,
+  'fragile-items':      75_000,
+  'truck-rentals':      65_000,
 }
 
 const SPACE_MULTIPLIER = {
-  'bedsitter': 0.55,
-  'mini-flat': 0.70,
-  '1bed':      0.85,
+  'bedsitter': 0.53,
+  'mini-flat': 0.68,
+  '1bed':      0.83,
   '2bed':      1.00,
-  '3bed':      1.30,
-  '4bed':      1.60,
-  '5plus':     2.00,
-  'duplex':    2.20,
+  '3bed':      1.33,
+  '4bed':      1.65,
+  '5plus':     2.05,
+  'duplex':    2.30,
   'office-sm': 1.00,
-  'office-lg': 1.70,
+  'office-lg': 1.75,
 }
 
-// Distance price by zone difference (0 = same zone, capped at 4+)
-const DISTANCE_PRICE = [20_000, 30_000, 45_000, 60_000, 75_000]
+// Distance surcharge by zone difference (0 = same zone, capped at 4+)
+const DISTANCE_PRICE = [25_000, 43_000, 65_000, 90_000, 118_000]
 
 function calcQuote(d) {
-  const base = BASE_PRICE[d.moveType] ?? 55_000
+  const base = BASE_PRICE[d.moveType] ?? 100_000
   const mult = SPACE_MULTIPLIER[d.spaceType] ?? 1.0
   const diff = Math.abs(getZone(d.fromLocation) - getZone(d.toLocation))
   let total  = base * mult + DISTANCE_PRICE[Math.min(diff, 4)]
 
-  if (d.needsPackaging === 'yes')              total += 18_000
-  if ((d.fragileItems ?? '').trim().length > 3) total += 12_000
+  if (d.needsPackaging === 'yes')               total += 29_000
+  if ((d.fragileItems ?? '').trim().length > 3)  total += 21_000
 
   if (d.moveDate) {
     const days = (new Date(d.moveDate) - Date.now()) / 86_400_000
-    if (days < 7)    total *= 1.20  // urgency surcharge
-    else if (days > 30) total *= 0.95 // early-bird discount
+    if (days < 7)       total *= 1.20  // urgency surcharge
+    else if (days > 30) total *= 0.95  // early-bird discount
   }
 
-  return Math.round(total / 1_000) * 1_000  // round to nearest ₦1 000
+  return Math.round(total / 5_000) * 5_000  // round to nearest ₦5 000
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────
@@ -92,7 +92,7 @@ function isValidEmail(v) {
 }
 
 // ── EmailJS config ────────────────────────────────────────────────────────
-const EJS_SERVICE  = 'service_p7ilyuf'
+const EJS_SERVICE  = 'service_gf2gome'
 const EJS_TEMPLATE = 'template_gdr8rhc'
 const EJS_KEY      = 'cg9OTYK9yGg73ksYv'
 
@@ -119,10 +119,10 @@ const SPACE_LABELS = {
 
 // ── Sidebar step definitions ──────────────────────────────────────────────
 const STEPS = [
-  { label: 'Locations',    sub: 'Where you are moving from/to', emoji: '🗺️'  },
-  { label: 'Move details', sub: 'What type of move?',           emoji: '🏠'  },
-  { label: 'Your Info',    sub: 'To share your result(s)',      emoji: '🚐'  },
-  { label: 'Extras',       sub: 'Any special requests?',        emoji: '📦'  },
+  { label: 'Locations',    sub: 'Where you are moving from/to', icon: '/images/step-locations.png'    },
+  { label: 'Move details', sub: 'What type of move?',           icon: '/images/step-move-details.png' },
+  { label: 'Your Info',    sub: 'To share your result(s)',      icon: '/images/step-your-info.png'    },
+  { label: 'Extras',       sub: 'Any special requests?',        icon: '/images/step-extras.png'       },
 ]
 
 // ── Icons ─────────────────────────────────────────────────────────────────
@@ -140,6 +140,15 @@ function ArrowIcon() {
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
       <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.6"
         strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+function Spinner() {
+  return (
+    <svg className="qm-spinner" width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+      <circle cx="7.5" cy="7.5" r="5.5" stroke="currentColor" strokeWidth="2" strokeOpacity="0.3" />
+      <path d="M7.5 2a5.5 5.5 0 0 1 5.5 5.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   )
 }
@@ -187,11 +196,13 @@ function CalendarIcon() {
 //   onClose     – called when user dismisses the modal
 //   prefill     – { from, to, moveType } from the hero form
 // =========================================================
-export default function QuoteModal({ isOpen, onClose, prefill = {} }) {
-  const [step,    setStep]    = useState(0)
-  const [quote,   setQuote]   = useState(null)
-  const [sending, setSending] = useState(false)
-  const [error,   setError]   = useState('')
+export default function QuoteModal({ isOpen, onClose, onBook, prefill = {} }) {
+  const [step,        setStep]        = useState(0)
+  const [quote,       setQuote]       = useState(null)
+  const [quoteReveal, setQuoteReveal] = useState(null)   // intermediate popup
+  // sending/error kept for future use (email is now fire-and-forget)
+  const [sending,     setSending]     = useState(false) // eslint-disable-line no-unused-vars
+  const [error,       setError]       = useState('')     // eslint-disable-line no-unused-vars
 
   // Build a fresh blank form state (merged with prefill)
   const blank = () => ({
@@ -215,6 +226,7 @@ export default function QuoteModal({ isOpen, onClose, prefill = {} }) {
     if (!isOpen) return
     setStep(0)
     setQuote(null)
+    setQuoteReveal(null)
     setError('')
     setSending(false)
     setData(blank())
@@ -247,60 +259,102 @@ export default function QuoteModal({ isOpen, onClose, prefill = {} }) {
     return true
   }
 
-  // Final submission: calculate → email → persist → show result
-  async function handleSubmit() {
-    setSending(true)
-    setError('')
+  // Step 1 of submission: calculate the estimate and show the reveal popup
+  function handleCalculate() {
+    const amount = calcQuote(data)
+    const ref    = genRef()
+    const min    = Math.round(amount * 0.92 / 1000) * 1000
+    const max    = Math.round(amount * 1.09 / 1000) * 1000
+    setQuoteReveal({
+      amount, ref,
+      formattedMin: `₦${min.toLocaleString('en-NG')}`,
+      formattedMax: `₦${max.toLocaleString('en-NG')}`,
+    })
+  }
 
-    const amount    = calcQuote(data)
-    const ref       = genRef()
-    const formatted = `₦${amount.toLocaleString('en-NG')}`
+  // Persist quote to sessionStorage (synchronous, instant)
+  function persistQuote(reveal) {
+    sessionStorage.setItem('prometheus_quote', JSON.stringify({
+      ...data,
+      quoteAmount: reveal.amount,
+      quoteRef:    reveal.ref,
+      generatedAt: new Date().toISOString(),
+    }))
+  }
+
+  // Send email fire-and-forget — never blocks the UI
+  function fireEmail(reveal) {
     const dateLabel = data.moveDate
       ? new Date(data.moveDate + 'T00:00:00').toLocaleDateString('en-GB', {
           day: 'numeric', month: 'long', year: 'numeric',
         })
       : 'Not specified'
 
-    try {
-      await emailjs.send(
-        EJS_SERVICE,
-        EJS_TEMPLATE,
-        {
-          to_name:       data.name,
-          to_email:      data.email,
-          phone:         data.phone?.trim() || 'Not provided',
-          quote_ref:     ref,
-          from_location: data.fromLocation,
-          to_location:   data.toLocation,
-          move_type:     MOVE_LABELS[data.moveType]   ?? data.moveType,
-          space_type:    SPACE_LABELS[data.spaceType]  ?? data.spaceType,
-          move_date:     dateLabel,
-          packaging:     data.needsPackaging === 'yes' ? 'Yes' : 'No',
-          fragile_items: data.fragileItems?.trim() || 'None',
-          quote_amount:  formatted,
-        },
-        EJS_KEY,
-      )
+    // Build a deep-link URL so the email CTA drops the user straight into
+    // the booking page with all their quote data pre-filled
+    const bookingParams = new URLSearchParams({
+      book:  'true',
+      ref:   reveal.ref,
+      from:  data.fromLocation,
+      to:    data.toLocation,
+      type:  data.moveType,
+      space: data.spaceType,
+      date:  data.moveDate          || '',
+      pkg:   data.needsPackaging    || '',
+      frag:  data.fragileItems?.trim() || '',
+      name:  data.name,
+      phone: data.phone?.trim()     || '',
+      email: data.email,
+    })
+    const booking_url = `https://prometheusmovers.com/?${bookingParams.toString()}`
 
-      // Persist quote for the booking flow (session-only)
-      sessionStorage.setItem('prometheus_quote', JSON.stringify({
-        ...data,
-        quoteAmount: amount,
-        quoteRef:    ref,
-        generatedAt: new Date().toISOString(),
-      }))
+    emailjs.send(
+      EJS_SERVICE,
+      EJS_TEMPLATE,
+      {
+        to_name:       data.name,
+        to_email:      data.email,
+        phone:         data.phone?.trim() || 'Not provided',
+        quote_ref:     reveal.ref,
+        from_location: data.fromLocation,
+        to_location:   data.toLocation,
+        move_type:     MOVE_LABELS[data.moveType]  ?? data.moveType,
+        space_type:    SPACE_LABELS[data.spaceType] ?? data.spaceType,
+        move_date:     dateLabel,
+        packaging:     data.needsPackaging === 'yes' ? 'Yes' : 'No',
+        fragile_items: data.fragileItems?.trim() || 'None',
+        quote_amount:  `${reveal.formattedMin} – ${reveal.formattedMax}`,
+        booking_url,
+      },
+      { publicKey: EJS_KEY },
+    ).catch(console.error)
+  }
 
-      setQuote({ amount, formatted, ref, dateLabel })
-    } catch {
-      setError("We couldn't send your quote right now. Please try again.")
-    } finally {
-      setSending(false)
-    }
+  // "Save & Decide Later" → show result instantly, email in background
+  function handleSaveAndDecideLater() {
+    persistQuote(quoteReveal)
+    const dateLabel = data.moveDate
+      ? new Date(data.moveDate + 'T00:00:00').toLocaleDateString('en-GB', {
+          day: 'numeric', month: 'long', year: 'numeric',
+        })
+      : 'Not specified'
+    setQuoteReveal(null)
+    setQuote({ ...quoteReveal, formatted: quoteReveal.formattedMin, dateLabel })
+    fireEmail(quoteReveal)
+  }
+
+  // "Book My Move" → navigate instantly, email in background
+  function handleBookMove() {
+    persistQuote(quoteReveal)
+    setQuoteReveal(null)
+    onClose()
+    if (onBook) onBook()
+    fireEmail(quoteReveal)
   }
 
   if (!isOpen) return null
 
-  return createPortal(
+  const modal = createPortal(
     <div
       className="qm-overlay"
       ref={overlayRef}
@@ -346,14 +400,19 @@ export default function QuoteModal({ isOpen, onClose, prefill = {} }) {
           </button>
 
           {quote ? (
-            <Result quote={quote} data={data} onClose={onClose} />
+            <Result quote={quote} data={data} onClose={onClose} onBook={onBook} />
           ) : (
             <>
               {/* Step header */}
               <div className="qm-header">
-                <span className="qm-header__emoji" aria-hidden="true">
-                  {STEPS[step].emoji}
-                </span>
+                <div className="qm-header__icon" aria-hidden="true">
+                  <img
+                    src={STEPS[step].icon}
+                    alt=""
+                    width="28"
+                    height="28"
+                  />
+                </div>
                 <div>
                   <h2 className="qm-header__title">Free Quote</h2>
                   <p className="qm-header__sub">
@@ -388,10 +447,9 @@ export default function QuoteModal({ isOpen, onClose, prefill = {} }) {
                   ) : (
                     <button
                       className="qm-btn qm-btn--submit"
-                      onClick={handleSubmit}
-                      disabled={sending}
+                      onClick={handleCalculate}
                     >
-                      {sending ? 'Calculating…' : 'Get My Free Quote'}
+                      Get My Free Quote
                     </button>
                   )
                 }
@@ -402,6 +460,22 @@ export default function QuoteModal({ isOpen, onClose, prefill = {} }) {
       </div>
     </div>,
     document.body,
+  )
+
+  return (
+    <>
+      {modal}
+      {quoteReveal && createPortal(
+        <QuoteReveal
+          reveal={quoteReveal}
+          sending={sending}
+          error={error}
+          onSave={handleSaveAndDecideLater}
+          onBook={handleBookMove}
+        />,
+        document.body,
+      )}
+    </>
   )
 }
 
@@ -453,7 +527,7 @@ function Step1({ data, set }) {
         <div className="qm-sel-wrap">
           <select
             id="qm-move-type"
-            className="qm-sel"
+            className={`qm-sel${!data.moveType ? ' qm-sel--empty' : ''}`}
             value={data.moveType}
             onChange={e => set('moveType', e.target.value)}
           >
@@ -475,7 +549,7 @@ function Step1({ data, set }) {
           <HomeIcon />
           <select
             id="qm-space"
-            className="qm-sel qm-sel--icon"
+            className={`qm-sel qm-sel--icon${!data.spaceType ? ' qm-sel--empty' : ''}`}
             value={data.spaceType}
             onChange={e => set('spaceType', e.target.value)}
           >
@@ -504,7 +578,7 @@ function Step1({ data, set }) {
           <input
             id="qm-date"
             type="date"
-            className="qm-sel qm-sel--icon"
+            className={`qm-sel qm-sel--icon${!data.moveDate ? ' qm-sel--empty' : ''}`}
             min={today}
             value={data.moveDate}
             onChange={e => set('moveDate', e.target.value)}
@@ -580,7 +654,7 @@ function Step3({ data, set, error }) {
         <div className="qm-sel-wrap">
           <select
             id="qm-packaging"
-            className="qm-sel"
+            className={`qm-sel${!data.needsPackaging ? ' qm-sel--empty' : ''}`}
             value={data.needsPackaging}
             onChange={e => set('needsPackaging', e.target.value)}
           >
@@ -614,8 +688,44 @@ function Step3({ data, set, error }) {
   )
 }
 
+// ── Quote Reveal Popup ────────────────────────────────────────────────────
+function QuoteReveal({ reveal, sending, error, onSave, onBook }) {
+  return (
+    <div className="qr-overlay">
+      <div className="qr-card">
+        <div className="qr-icon" aria-hidden="true">
+          <img src="/images/step-move-details.png" alt="" width="28" height="28" />
+        </div>
+        <h2 className="qr-title">{"Here's your free quote!!"}</h2>
+        <p className="qr-desc">
+          Based on the details you provided, your move will cost approximately:
+        </p>
+        <p className="qr-range">{reveal.formattedMin} – {reveal.formattedMax}</p>
+        <p className="qr-note">**final cost may vary based on exact load and timing</p>
+        <div className="qr-actions">
+          <button
+            className="qr-btn qr-btn--save"
+            onClick={onSave}
+            disabled={sending}
+          >
+            {sending ? 'Sending…' : 'Save & Decide Later'}
+          </button>
+          <button
+            className="qr-btn qr-btn--book"
+            onClick={onBook}
+            disabled={sending}
+          >
+            Book My Move
+          </button>
+        </div>
+        {error && <p className="qr-error">{error}</p>}
+      </div>
+    </div>
+  )
+}
+
 // ── Result screen ─────────────────────────────────────────────────────────
-function Result({ quote, data, onClose }) {
+function Result({ quote, data, onClose, onBook }) {
   return (
     <div className="qm-result">
       <span className="qm-result__emoji" aria-hidden="true">🎉</span>
@@ -636,7 +746,12 @@ function Result({ quote, data, onClose }) {
       </p>
 
       <div className="qm-result__actions">
-        <button className="qm-btn qm-btn--submit">Book This Move</button>
+        <button
+          className="qm-btn qm-btn--submit"
+          onClick={() => { onClose(); if (onBook) onBook() }}
+        >
+          Book This Move
+        </button>
         <button className="qm-btn qm-btn--ghost" onClick={onClose}>Close</button>
       </div>
     </div>

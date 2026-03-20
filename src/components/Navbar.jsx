@@ -31,7 +31,9 @@ const NAV_LINKS = [
   { label: 'Contact Us', href: '#contact'    },
 ]
 
-export default function Navbar() {
+// solid   — forces the scrolled (white/opaque) style regardless of scroll position
+// onHome  — callback to navigate back to the index page
+export default function Navbar({ solid = false, onHome }) {
   const [activeLink, setActiveLink] = useState('Home')
   const [scrolled,   setScrolled]   = useState(false)
 
@@ -41,9 +43,11 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  const isSolid = solid || scrolled
+
   return (
     <nav
-      className={`navbar${scrolled ? ' navbar--scrolled' : ''}`}
+      className={`navbar${isSolid ? ' navbar--scrolled' : ''}`}
       role="navigation"
       aria-label="Main navigation"
     >
@@ -51,7 +55,12 @@ export default function Navbar() {
 
         {/* ── Brand — logo mark + wordmark centred in their own flex box ── */}
         <div className="navbar__brand">
-          <a href="/" className="navbar__logo" aria-label="Prometheus home">
+          <a
+            href="/"
+            className="navbar__logo"
+            aria-label="Prometheus home"
+            onClick={e => { if (onHome) { e.preventDefault(); onHome() } }}
+          >
             <img src="/logomark.svg" width="32" height="32" alt="" aria-hidden="true" />
             <span className="navbar__logo-text">Prometheus</span>
           </a>
@@ -66,7 +75,13 @@ export default function Navbar() {
                 <a
                   href={href}
                   className={`navbar__link${isActive ? ' navbar__link--active' : ''}`}
-                  onClick={() => setActiveLink(label)}
+                  onClick={e => {
+                    setActiveLink(label)
+                    if (label === 'Home' && onHome) {
+                      e.preventDefault()
+                      onHome()
+                    }
+                  }}
                   aria-current={isActive ? 'page' : undefined}
                 >
                   {/* Top row: text + optional chevron */}

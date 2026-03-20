@@ -25,9 +25,11 @@
 /* ── Dialog box ─────────────────────────────────────────────────────────── */
 .qm-dialog {
   display: grid;
-  grid-template-columns: 288px 1fr;
-  width: min(900px, 100%);
-  max-height: min(660px, calc(100svh - 2rem));
+  grid-template-columns: 280px 1fr;
+  column-gap: 1.75rem;        /* 28px between sidebar and content */
+  padding: 1.25rem;           /* 20px inset all around */
+  width: min(904px, 100%);
+  height: min(600px, calc(100svh - 2rem));
   background: #fff;
   border-radius: 1rem;
   overflow: hidden;
@@ -43,11 +45,13 @@
 /* ── Sidebar ────────────────────────────────────────────────────────────── */
 .qm-sidebar {
   background: #F9FAFB;
-  border-right: 1px solid #E5E7EB;
-  padding: 2.5rem 1.75rem;
+  border-radius: 0.5rem;
+  padding: 0.75rem;           /* 12px internal padding */
+  max-width: 280px;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
+  overflow: hidden;
 }
 
 /* ── Step row ───────────────────────────────────────────────────────────── */
@@ -59,49 +63,70 @@
 
 .qm-step__dot {
   flex-shrink: 0;
+  position: relative;
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 1.75px solid #D1D5DB;
+  border: 2px solid #D1D5DB;
+  background: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 1px;
-  color: transparent;
+  color: transparent;          /* hides checkmark until done */
   transition: background 0.2s, border-color 0.2s, color 0.2s;
 }
 
+/* Active: radio-button style — ring with filled inner dot */
 .qm-step--active .qm-step__dot {
-  background:   #1F2A37;
   border-color: #1F2A37;
+  background:   #fff;
 }
 
+.qm-step--active .qm-step__dot::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1F2A37;
+}
+
+/* Done: solid fill + white checkmark */
 .qm-step--done .qm-step__dot {
   background:   #1F2A37;
   border-color: #1F2A37;
   color: #fff;
 }
 
+/* Hide the inner dot pseudo-element when showing the checkmark */
+.qm-step--done .qm-step__dot::after { display: none; }
+
 .qm-step__label {
   font-size:   0.875rem;
-  font-weight: 400;
-  line-height: 1.43;
-  color: #9CA3AE;
+  font-weight: 600;
+  line-height: 1.42;
+  color: #A3A8AE;
   margin: 0;
-  transition: color 0.2s, font-weight 0.2s;
+  transition: color 0.2s;
 }
 
 .qm-step--active .qm-step__label,
 .qm-step--done   .qm-step__label {
-  font-weight: 600;
-  color: #1F2A37;
+  color: #4D5761;
 }
 
 .qm-step__sub {
-  font-size:   0.75rem;
-  line-height: 1.5;
-  color: #9CA3AE;
+  font-size:   0.875rem;
+  font-weight: 400;
+  line-height: 1.42;
+  color: #B2B6BD;
   margin: 0.125rem 0 0;
+}
+
+.qm-step--active .qm-step__sub,
+.qm-step--done   .qm-step__sub {
+  color: #4D5761;
 }
 
 /* ── Content panel ──────────────────────────────────────────────────────── */
@@ -116,8 +141,8 @@
 /* ── Close button ───────────────────────────────────────────────────────── */
 .qm-close {
   position: absolute;
-  top:   1.125rem;
-  right: 1.125rem;
+  top:   0;
+  right: 0;
   width:  2rem;
   height: 2rem;
   border:     none;
@@ -142,15 +167,25 @@
   display: flex;
   align-items: center;
   gap: 0.875rem;
-  padding: 1.75rem 2rem 1.25rem;
-  border-bottom: 1px solid #F3F4F6;
+  padding: 0 0 1.25rem;
   flex-shrink: 0;
 }
 
-.qm-header__emoji {
-  font-size:   2rem;
-  line-height: 1;
+.qm-header__icon {
   flex-shrink: 0;
+  width:  3rem;
+  height: 3rem;
+  border: 1px solid #D2D6DB;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qm-header__icon img {
+  width:  1.75rem;
+  height: 1.75rem;
+  object-fit: contain;
 }
 
 .qm-header__title {
@@ -170,8 +205,9 @@
 .qm-body {
   flex: 1;
   overflow-y: auto;
-  overflow-x: visible;   /* let suggestion dropdowns spill out horizontally if needed */
-  padding: 1.5rem 2rem;
+  overflow-x: hidden;
+  padding: 0;
+  min-width: 0;
 }
 
 /* ── Field groups ───────────────────────────────────────────────────────── */
@@ -200,6 +236,8 @@
 
 /* ── Text / email / tel inputs ──────────────────────────────────────────── */
 .qm-input {
+  width:       100%;
+  box-sizing:  border-box;
   height:      2.75rem;
   padding:     0 0.875rem;
   border:      1px solid #E5E7EB;
@@ -212,7 +250,7 @@
   transition:  border-color 0.15s, box-shadow 0.15s;
 }
 
-.qm-input::placeholder { color: #9CA3AF; }
+.qm-input::placeholder { color: #9DA4AE; }
 
 .qm-input:focus {
   border-color: var(--color-primary, #F63D68);
@@ -221,9 +259,11 @@
 
 /* ── Select / date wrapper ──────────────────────────────────────────────── */
 .qm-sel-wrap {
-  position: relative;
-  display:  flex;
+  position:   relative;
+  display:    flex;
   align-items: center;
+  width:      100%;
+  box-sizing: border-box;
 }
 
 /* Trailing chevron sits at the right */
@@ -262,7 +302,10 @@
   box-shadow:   0 0 0 3px rgba(246, 61, 104, 0.12);
 }
 
-.qm-sel option[value=""] { color: #9CA3AF; }
+.qm-sel option[value=""] { color: #9DA4AE; }
+
+/* Placeholder state: applied when no value is selected */
+.qm-sel--empty { color: #9DA4AE; }
 
 /* Icon variant: extra left padding to clear the leading icon */
 .qm-sel--icon { padding-left: 2.375rem; }
@@ -296,8 +339,7 @@
   justify-content: flex-end;
   align-items:     center;
   gap:     0.75rem;
-  padding: 1rem 2rem;
-  border-top: 1px solid #F3F4F6;
+  padding: 1.25rem 0 0;
   flex-shrink: 0;
 }
 
@@ -333,6 +375,15 @@
 }
 
 .qm-btn--next:hover:not(:disabled) { background: #374151; }
+
+.qm-spinner {
+  animation: qm-spin 0.75s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes qm-spin {
+  to { transform: rotate(360deg); }
+}
 
 .qm-btn--next:disabled,
 .qm-btn--submit:disabled {
@@ -372,7 +423,7 @@
   font-size:   0.9375rem   !important;
 }
 
-.qm-body .hero__input::placeholder { color: #9CA3AF !important; }
+.qm-body .hero__input::placeholder { color: #9DA4AE !important; }
 
 .qm-body .location-combobox__suggestions {
   z-index: 10;
@@ -462,6 +513,118 @@
   gap:         0.75rem;
 }
 
+/* ── Quote Reveal Popup ─────────────────────────────────────────────────── */
+.qr-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: rgba(17, 24, 39, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: qm-fade 0.2s ease;
+}
+
+.qr-card {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2rem 1.75rem;
+  width: min(420px, 100%);
+  text-align: center;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.18);
+  animation: qm-rise 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.qr-icon {
+  width:  3.5rem;
+  height: 3.5rem;
+  border: 1px solid #E5E7EB;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.25rem;
+}
+
+.qr-icon img {
+  width:  1.75rem;
+  height: 1.75rem;
+  object-fit: contain;
+}
+
+.qr-title {
+  font-size:   1.25rem;
+  font-weight: 700;
+  color: #1F2A37;
+  margin: 0 0 0.75rem;
+}
+
+.qr-desc {
+  font-size:   0.9375rem;
+  color:       #6B7280;
+  margin:      0 0 1.5rem;
+  line-height: 1.5;
+}
+
+.qr-range {
+  font-size:      1.75rem;
+  font-weight:    700;
+  color:          var(--color-primary, #F63D68);
+  margin:         0 0 0.25rem;
+  letter-spacing: -0.02em;
+}
+
+.qr-note {
+  font-size:   0.625rem;
+  line-height: 1.6;
+  font-weight: 400;
+  color:       #6C737F;
+  margin:      0 0 1.75rem;
+}
+
+.qr-actions {
+  display: flex;
+  gap:     0.75rem;
+}
+
+.qr-btn {
+  flex:        1;
+  height:      2.75rem;
+  border:      none;
+  border-radius: 0.5rem;
+  font-family: inherit;
+  font-size:   0.9375rem;
+  font-weight: 500;
+  cursor:      pointer;
+  transition:  background 0.15s, filter 0.15s, opacity 0.15s;
+}
+
+.qr-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.qr-btn--save {
+  background:    #fff;
+  color:         #1F2A37;
+  border:        1px solid #D2D6DB;
+  border-radius: 0.25rem;
+}
+
+.qr-btn--save:hover:not(:disabled) { background: #F9FAFB; }
+
+.qr-btn--book {
+  background:  var(--color-primary, #F63D68);
+  color:       #fff;
+  font-weight: 600;
+}
+
+.qr-btn--book:hover:not(:disabled) { filter: brightness(1.08); }
+
+.qr-error {
+  font-size: 0.875rem;
+  color:     #DC2626;
+  margin:    0.75rem 0 0;
+}
+
 /* ── Mobile ─────────────────────────────────────────────────────────────── */
 @media (max-width: 600px) {
   .qm-dialog {
@@ -473,11 +636,7 @@
   /* Collapse the sidebar on mobile — progress is implicit in the header */
   .qm-sidebar { display: none; }
 
-  .qm-header,
-  .qm-body,
-  .qm-nav { padding-left: 1.25rem; padding-right: 1.25rem; }
-
-  .qm-result { padding: 1.5rem 1.25rem; }
+  .qm-result { padding: 0; }
 
   .qm-result__amount { font-size: 2rem; }
 }

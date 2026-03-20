@@ -78,6 +78,12 @@ export default function LocationCombobox({ id, placeholder, value, onChange }) {
   const wrapperRef = useRef(null)
   const inputRef   = useRef(null)
 
+  // ── Sync internal query when the parent programmatically sets a value ──
+  // (e.g. when the QuoteModal pre-fills from the hero form on open)
+  useEffect(() => {
+    setQuery(value ?? '')
+  }, [value])
+
   // ── Close when user clicks outside ──
   useEffect(() => {
     function onPointerDown(e) {
