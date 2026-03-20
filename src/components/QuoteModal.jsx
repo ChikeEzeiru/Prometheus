@@ -306,7 +306,7 @@ export default function QuoteModal({ isOpen, onClose, onBook, prefill = {} }) {
       phone: data.phone?.trim()     || '',
       email: data.email,
     })
-    const booking_url = `https://prometheusmovers.com/?${bookingParams.toString()}`
+    const booking_url = `https://prometheus-moving.netlify.app/?${bookingParams.toString()}`
 
     emailjs.send(
       EJS_SERVICE,
