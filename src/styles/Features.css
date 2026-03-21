@@ -88,6 +88,9 @@
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
+  .features__heading    { font-size: 1.75rem; }
+  .features__subheading { font-size: 1rem; }
+
   .features__grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 32px 24px;
@@ -95,7 +98,5 @@
 }
 
 @media (max-width: 480px) {
-  .features__grid {
-    grid-template-columns: 1fr;
-  }
+  .features__grid { grid-template-columns: 1fr; }
 }

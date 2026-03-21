@@ -76,6 +76,17 @@ body {
   padding-inline: 32px;
 }
 
+/* ── Mobile globals ── */
+@media (max-width: 768px) {
+  .container { padding-inline: 20px; }
+  .section   { padding-block:  4rem; }
+}
+
+@media (max-width: 480px) {
+  .container { padding-inline: 16px; }
+  .section   { padding-block:  3rem; }
+}
+
 /* --- Anchor reset --- */
 a {
   text-decoration: none;

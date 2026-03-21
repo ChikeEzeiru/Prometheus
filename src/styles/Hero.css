@@ -406,8 +406,11 @@
    ========================================================= */
 @media (max-width: 768px) {
   .hero__content {
-    padding: 0 24px 48px;
+    padding: 0 20px 48px;
   }
+
+  .hero__headline    { font-size: 2.75rem; }
+  .hero__subheadline { font-size: 1rem; max-width: 100%; }
 
   /* Stack form fields vertically on mobile */
   .hero__form {
@@ -422,4 +425,9 @@
     width: 100%;
     align-self: stretch;
   }
+}
+
+@media (max-width: 480px) {
+  .hero__content  { padding: 0 16px 40px; }
+  .hero__headline { font-size: 2.25rem; }
 }

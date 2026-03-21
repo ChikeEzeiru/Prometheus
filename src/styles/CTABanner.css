@@ -83,15 +83,14 @@
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
-  .cta-banner {
-    grid-template-columns: 1fr;
-  }
+  .cta-banner { grid-template-columns: 1fr; }
 
   .cta-banner__content {
-    padding: 4rem 2rem;
+    padding: 4rem 20px;
   }
 
-  .cta-banner__image-wrap {
-    height: 280px;
-  }
+  .cta-banner__heading { font-size: 1.75rem; }
+  .cta-banner__body    { font-size: 1rem; }
+
+  .cta-banner__image-wrap { height: 280px; }
 }

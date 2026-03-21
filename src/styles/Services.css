@@ -163,6 +163,9 @@
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
+  .services__heading    { font-size: 1.75rem; }
+  .services__subheading { font-size: 1rem; width: 100%; }
+
   .services__tabs {
     flex-wrap: wrap;
     width: 100%;
@@ -173,7 +176,8 @@
     min-height: auto;
   }
 
-  .services__image-wrap {
-    height: 280px;
-  }
+  .services__card-heading { font-size: 1.75rem; }
+  .services__card-body    { font-size: 1rem; margin-top: 24px; }
+
+  .services__image-wrap { height: 280px; }
 }
