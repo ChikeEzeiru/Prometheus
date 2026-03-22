@@ -284,7 +284,7 @@ export default function Hero({ onBook }) {
         <form className="hero__form" onSubmit={handleGetQuote} noValidate>
 
           {/* Current Location */}
-          <div className="hero__field">
+          <div className={`hero__field${currentLocation ? ' hero__field--has-value' : ''}`}>
             <label className="hero__field-label" htmlFor="current-location">
               Current Location <FieldTooltip tip="Your current address or area in Lagos" />
             </label>
@@ -297,7 +297,7 @@ export default function Hero({ onBook }) {
           </div>
 
           {/* New Location */}
-          <div className="hero__field">
+          <div className={`hero__field${newLocation ? ' hero__field--has-value' : ''}`}>
             <label className="hero__field-label" htmlFor="new-location">
               New Location <FieldTooltip tip="The area or address you are moving to in Lagos" />
             </label>
@@ -310,7 +310,7 @@ export default function Hero({ onBook }) {
           </div>
 
           {/* Type of Relocation – custom select */}
-          <div className="hero__field">
+          <div className={`hero__field${relocationType ? ' hero__field--has-value' : ''}`}>
             <label className="hero__field-label" htmlFor="relocation-type">
               Type of Relocation <FieldTooltip tip="Choose the kind of move — home, office, fragile items, or a truck rental" />
             </label>

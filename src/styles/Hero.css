@@ -417,10 +417,6 @@
   .hero__headline    { font-size: 2rem; line-height: 1.2; }
   .hero__subheadline { font-size: 0.9375rem; max-width: 100%; }
 
-  /* Labels hidden on mobile — placeholders carry the same info
-     and we reclaim ~22px × 3 fields = ~66px of vertical space  */
-  .hero__field-label { display: none; }
-
   /* Full-width stacked form */
   .hero__form {
     display:        flex;
@@ -432,9 +428,40 @@
   }
 
   .hero__field {
-    flex:      none;
-    width:     100%;
-    min-width: 0;
+    flex:         none;
+    width:        100%;
+    min-width:    0;
+    position:     relative;
+    padding-top:  1.375rem; /* reserved space for the floating label */
+  }
+
+  /* Floating label — invisible by default, fades in above the input
+     when the field is focused or has a value (Google-style pattern)  */
+  .hero__field-label {
+    display:       block;           /* re-enable (was display:none) */
+    position:      absolute;
+    top:           0.125rem;
+    left:          0;
+    font-size:     0.6875rem;       /* 11px */
+    font-weight:   600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color:         rgba(255, 255, 255, 0.8);
+    opacity:       0;
+    transform:     translateY(3px);
+    transition:    opacity 0.18s ease, transform 0.18s ease;
+    pointer-events: none;
+    white-space:   nowrap;
+  }
+
+  /* Tooltip is a desktop affordance — hide it inside the mobile label */
+  .hero__field-label .field-tooltip { display: none; }
+
+  /* Reveal when field is focused OR the user has already entered a value */
+  .hero__field:focus-within .hero__field-label,
+  .hero__field--has-value   .hero__field-label {
+    opacity:   1;
+    transform: translateY(0);
   }
 
   .hero__form .location-combobox,
