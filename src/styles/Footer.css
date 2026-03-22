@@ -200,7 +200,9 @@
     height: 2.75rem;
   }
 
-  .footer__tagline { font-size: 1.25rem; }
+  .footer__tagline { font-size: 1.065rem; }
+  .footer__nav-heading { font-size: 0.75rem; }
+  .footer__nav-link    { font-size: 0.875rem; }
 
   .footer__newsletter { flex-direction: column; }
 

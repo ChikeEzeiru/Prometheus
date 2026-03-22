@@ -88,8 +88,11 @@
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
+  .features__eyebrow    { font-size: 0.75rem; }
   .features__heading    { font-size: 1.75rem; }
-  .features__subheading { font-size: 1rem; }
+  .features__subheading { font-size: 1.065rem; }
+  .features__title      { font-size: 1rem; }    /* was 1.125rem / 18px */
+  .features__body       { font-size: 0.875rem; } /* was 1rem / 16px */
 
   .features__grid {
     grid-template-columns: repeat(2, 1fr);

@@ -114,9 +114,12 @@
     gap: 40px;
   }
 
-  .how-it-works__heading    { font-size: 1.75rem; }
-  .how-it-works__subheading { font-size: 1rem; }
-  .how-it-works__header     { margin-bottom: 32px; }
+  .how-it-works__eyebrow     { font-size: 0.75rem; }
+  .how-it-works__heading     { font-size: 1.75rem; }
+  .how-it-works__subheading  { font-size: 1.065rem; }
+  .how-it-works__header      { margin-bottom: 32px; }
+  .how-it-works__step-title  { font-size: 1rem; }     /* was 1.125rem / 18px */
+  .how-it-works__step-body   { font-size: 0.875rem; } /* was 1rem / 16px */
 
   /* Show image first on mobile so it leads the section visually */
   .how-it-works__image-wrap {

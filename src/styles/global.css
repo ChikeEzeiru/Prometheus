@@ -76,6 +76,12 @@ body {
   padding-inline: 32px;
 }
 
+/* ── Prevent horizontal overflow on every viewport ── */
+html, body {
+  overflow-x: hidden;
+  max-width:  100%;
+}
+
 /* ── Mobile globals ── */
 @media (max-width: 768px) {
   .container { padding-inline: 20px; }

@@ -8,7 +8,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
+  z-index: 102;    /* must sit above the mobile menu overlay (101) */
 
   height: 4.5rem;           /* 72px — enforced, not padding-driven */
   display: flex;

@@ -141,8 +141,13 @@
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
-  .testimonials          { padding-block: 4rem; }
-  .testimonials__heading    { font-size: 1.75rem; }
-  .testimonials__subheading { font-size: 1rem; width: 100%; }
-  .testimonials__header     { margin-bottom: 40px; }
+  .testimonials                  { padding-block: 4rem; }
+  .testimonials__eyebrow         { font-size: 0.75rem; }
+  .testimonials__heading         { font-size: 1.75rem; }
+  .testimonials__subheading      { font-size: 1.065rem; width: 100%; }
+  .testimonials__header          { margin-bottom: 40px; }
+  .testimonials__card-title      { font-size: 1rem; }     /* was 1.0625rem */
+  .testimonials__card-body       { font-size: 0.875rem; } /* was 0.9375rem */
+  .testimonials__card-name       { font-size: 0.875rem; }
+  .testimonials__card-location   { font-size: 0.8125rem; }
 }
