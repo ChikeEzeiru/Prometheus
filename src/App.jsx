@@ -1,8 +1,12 @@
 // =========================================================
 // APP COMPONENT
 // Root component — manages top-level page routing via state.
-//   'home'    → full landing page
-//   'booking' → BookingPage (pre-filled from sessionStorage quote)
+//   'home'      → full landing page
+//   'booking'   → BookingPage (pre-filled from sessionStorage quote)
+//   'contact'   → ContactPage
+//   'blog'      → BlogPage (listing)
+//   'blog-post' → BlogPostPage (single post)
+//   'storage'   → StoragePage
 // =========================================================
 
 import React, { useState, useEffect } from 'react'
@@ -15,6 +19,10 @@ import HowItWorks   from './components/HowItWorks'
 import CTABanner    from './components/CTABanner'
 import Footer       from './components/Footer'
 import BookingPage  from './components/BookingPage'
+import ContactPage  from './components/ContactPage'
+import BlogPage     from './components/BlogPage'
+import BlogPostPage from './components/BlogPostPage'
+import StoragePage  from './components/StoragePage'
 
 // Reads ?book=true&... params set by the quote email CTA.
 // Runs once at module evaluation so useState gets the right initial value
@@ -44,7 +52,8 @@ function resolveInitialPage() {
 }
 
 export default function App() {
-  const [page, setPage] = useState(resolveInitialPage)
+  const [page,          setPage]          = useState(resolveInitialPage)
+  const [currentPostId, setCurrentPostId] = useState(null)
 
   // Called by QuoteModal — quote data already in sessionStorage
   function goToBooking() {
@@ -64,13 +73,54 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'instant' })
   }
 
-  const onBooking = page === 'booking'
+  function goToContact() {
+    setPage('contact')
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }
+
+  function goToBlog() {
+    setCurrentPostId(null)
+    setPage('blog')
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }
+
+  function goToStorage() {
+    setPage('storage')
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }
+
+  function goToPost(id) {
+    setCurrentPostId(id)
+    setPage('blog-post')
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }
+
+  const onBooking  = page === 'booking'
+  const onContact  = page === 'contact'
+  const onBlog     = page === 'blog'
+  const onBlogPost = page === 'blog-post'
+  const onStorage  = page === 'storage'
+  const isSolid    = onBooking || onContact || onBlog || onBlogPost || onStorage
 
   return (
     <>
-      <Navbar solid={onBooking} onHome={goHome} />
+      <Navbar
+        solid={isSolid}
+        onHome={goHome}
+        onContact={goToContact}
+        onBlog={goToBlog}
+        onStorage={goToStorage}
+      />
       {onBooking ? (
         <BookingPage onBack={goHome} />
+      ) : onContact ? (
+        <ContactPage />
+      ) : onBlog ? (
+        <BlogPage onPost={goToPost} />
+      ) : onBlogPost ? (
+        <BlogPostPage postId={currentPostId} onBack={goToBlog} />
+      ) : onStorage ? (
+        <StoragePage />
       ) : (
         <>
           <Hero onBook={goToBooking} />

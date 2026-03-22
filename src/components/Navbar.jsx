@@ -26,14 +26,17 @@ function ChevronDown() {
 const NAV_LINKS = [
   { label: 'Home',       href: '#'           },
   { label: 'Relocation', href: '#relocation', hasDropdown: true },
-  { label: 'Storage',    href: '#storage'    },
+  { label: 'Storage',    href: '#storage',    badge: 'New'      },
   { label: 'Blog',       href: '#blog'       },
   { label: 'Contact Us', href: '#contact'    },
 ]
 
-// solid   — forces the scrolled (white/opaque) style regardless of scroll position
-// onHome  — callback to navigate back to the index page
-export default function Navbar({ solid = false, onHome }) {
+// solid      — forces the scrolled (white/opaque) style regardless of scroll position
+// onHome     — callback to navigate back to the index page
+// onContact  — callback to navigate to the contact page
+// onBlog     — callback to navigate to the blog listing page
+// onStorage  — callback to navigate to the storage page
+export default function Navbar({ solid = false, onHome, onContact, onBlog, onStorage }) {
   const [activeLink, setActiveLink] = useState('Home')
   const [scrolled,   setScrolled]   = useState(false)
   const [menuOpen,   setMenuOpen]   = useState(false)
@@ -56,6 +59,18 @@ export default function Navbar({ solid = false, onHome }) {
     if (label === 'Home' && onHome) {
       e.preventDefault()
       onHome()
+    }
+    if (label === 'Contact Us' && onContact) {
+      e.preventDefault()
+      onContact()
+    }
+    if (label === 'Blog' && onBlog) {
+      e.preventDefault()
+      onBlog()
+    }
+    if (label === 'Storage' && onStorage) {
+      e.preventDefault()
+      onStorage()
     }
   }
 
@@ -85,7 +100,7 @@ export default function Navbar({ solid = false, onHome }) {
 
           {/* ── Desktop nav links ── */}
           <ul className="navbar__links" role="list">
-            {NAV_LINKS.map(({ label, href, hasDropdown }) => {
+            {NAV_LINKS.map(({ label, href, hasDropdown, badge }) => {
               const isActive = activeLink === label
               return (
                 <li key={label} className="navbar__item">
@@ -99,6 +114,9 @@ export default function Navbar({ solid = false, onHome }) {
                       {label}
                       {hasDropdown && (
                         <span className="navbar__chevron"><ChevronDown /></span>
+                      )}
+                      {badge && !isActive && (
+                        <span className="navbar__new-badge">{badge}</span>
                       )}
                     </span>
                     <span
@@ -132,7 +150,7 @@ export default function Navbar({ solid = false, onHome }) {
         role="dialog"
         aria-label="Mobile navigation"
       >
-        {NAV_LINKS.map(({ label, href }) => (
+        {NAV_LINKS.map(({ label, href, badge }) => (
           <a
             key={label}
             href={href}
@@ -140,6 +158,9 @@ export default function Navbar({ solid = false, onHome }) {
             onClick={e => handleLinkClick(e, label)}
           >
             {label}
+            {badge && activeLink !== label && (
+              <span className="navbar__new-badge">{badge}</span>
+            )}
           </a>
         ))}
       </div>

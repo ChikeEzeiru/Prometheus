@@ -120,6 +120,21 @@
   opacity: 0.7;
 }
 
+/* ── "New" badge — blue pill, works on both transparent & scrolled nav ── */
+.navbar__new-badge {
+  display:       inline-flex;
+  align-items:   center;
+  background:    #2563EB;
+  color:         #ffffff;
+  font-size:     0.75rem;    /* 12px */
+  font-weight:   500;
+  line-height:   1.5;        /* 18px */
+  padding:       2px 6px;
+  border-radius: 100px;
+  margin-left:   4px;
+  flex-shrink:   0;
+}
+
 /* ── Active pill ──
    Always rendered; toggled visible via class.
    Sits naturally inside the link column — no absolute pos. */
