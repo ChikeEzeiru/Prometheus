@@ -414,7 +414,7 @@
     gap: 10px;
   }
 
-  .hero__headline    { font-size: 2rem; line-height: 1.2; }
+  .hero__headline    { font-size: 2.375rem; line-height: 1.2; }
   .hero__subheadline { font-size: 0.9375rem; max-width: 100%; }
 
   /* Full-width stacked form */
@@ -428,40 +428,43 @@
   }
 
   .hero__field {
-    flex:         none;
-    width:        100%;
-    min-width:    0;
-    position:     relative;
-    padding-top:  1.375rem; /* reserved space for the floating label */
+    flex:      none;
+    width:     100%;
+    min-width: 0;
+    position:  relative;
+    /* No padding-top — label is absolutely positioned on the border */
   }
 
-  /* Floating label — invisible by default, fades in above the input
-     when the field is focused or has a value (Google-style pattern)  */
+  /* Floating label — sits ON the top border of the white input card.
+     White background "notches" through the border line, just like
+     Google's Material outlined text field.
+     Hidden at rest; fades in on focus or once a value exists.        */
   .hero__field-label {
-    display:       block;           /* re-enable (was display:none) */
-    position:      absolute;
-    top:           0.125rem;
-    left:          0;
-    font-size:     0.6875rem;       /* 11px */
-    font-weight:   600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color:         rgba(255, 255, 255, 0.8);
-    opacity:       0;
-    transform:     translateY(3px);
-    transition:    opacity 0.18s ease, transform 0.18s ease;
+    display:        block;
+    position:       absolute;
+    top:            -0.5rem;      /* straddles the input's top border   */
+    left:           0.875rem;     /* aligns with the inner text padding  */
+    font-size:      0.6875rem;    /* 11 px — small but legible           */
+    font-weight:    600;
+    letter-spacing: 0.03em;
+    color:          #6B7280;
+    background:     #ffffff;
+    padding:        0 4px;
+    border-radius:  2px;
+    opacity:        0;
+    transition:     opacity 0.15s ease;
     pointer-events: none;
-    white-space:   nowrap;
+    white-space:    nowrap;
+    z-index:        3;
   }
 
-  /* Tooltip is a desktop affordance — hide it inside the mobile label */
+  /* Tooltips are a hover affordance — irrelevant on touch screens */
   .hero__field-label .field-tooltip { display: none; }
 
-  /* Reveal when field is focused OR the user has already entered a value */
+  /* Reveal when any child is focused OR a value has been entered */
   .hero__field:focus-within .hero__field-label,
   .hero__field--has-value   .hero__field-label {
-    opacity:   1;
-    transform: translateY(0);
+    opacity: 1;
   }
 
   .hero__form .location-combobox,
@@ -482,5 +485,5 @@
 
 @media (max-width: 480px) {
   .hero__content  { padding: 0 16px 1.25rem; gap: 8px; }
-  .hero__headline { font-size: 1.75rem; }
+  .hero__headline { font-size: 2.375rem; }
 }
