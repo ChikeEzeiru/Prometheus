@@ -161,26 +161,40 @@
   display: block;
 }
 
+/* Short labels hidden on desktop; long labels hidden on mobile */
+.services__tab-label-short { display: none; }
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .services__eyebrow    { font-size: 0.75rem; }
   .services__heading    { font-size: 1.75rem; }
   .services__subheading { font-size: 1.065rem; width: 100%; }
 
-  /* Tabs scroll horizontally — never wrap or overflow the page */
+  /* Tab rail fills the container — no scrolling needed with short labels */
   .services__tabs {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
     width: 100%;
+    flex-wrap: nowrap;
   }
-  .services__tabs::-webkit-scrollbar { display: none; }
+
+  /* Each tab shares the space equally */
+  .services__tab {
+    flex:    1;
+    padding: 8px 10px;
+    font-size: 0.8125rem;
+    text-align: center;
+  }
+
+  /* Swap to short labels */
+  .services__tab-label       { display: none; }
+  .services__tab-label-short { display: inline; }
 
   .services__content {
     grid-template-columns: 1fr;
     min-height: auto;
+  }
+
+  .services__card {
+    padding: 0.625rem;
   }
 
   .services__card-heading { font-size: 1.75rem; }

@@ -47,6 +47,7 @@ const TABS = [
   {
     id: 'home-relocation',
     label: 'Full Home Relocation',
+    shortLabel: 'Home',
     icon: <HomeIcon />,
     heading: 'Move your entire home without lifting a finger',
     body: "We are insured, and our crew handles beds, generators and large electronics with 'jaga-jaga road' proof packaging",
@@ -57,6 +58,7 @@ const TABS = [
   {
     id: 'commercial-relocation',
     label: 'Commercial Relocation',
+    shortLabel: 'Office',
     icon: <BuildingIcon />,
     heading: 'Move in one weekend, open on Monday like nothing happened',
     body: 'We relocate offices, shops and warehouses, with specialized handling for furniture & equipment, sensitive documents, tech & delicate signage',
@@ -67,6 +69,7 @@ const TABS = [
   {
     id: 'fragile-packaging',
     label: 'Fragile Items Packaging',
+    shortLabel: 'Fragile',
     icon: <GlassIcon />,
     heading: 'Priceless family heirlooms?',
     body: 'Our triple layer packaging ensures that your fragile items survive even the highest bumps and the deepest potholes',
@@ -77,6 +80,7 @@ const TABS = [
   {
     id: 'truck-rentals',
     label: 'Moving Truck Rentals',
+    shortLabel: 'Trucks',
     icon: <TruckIcon />,
     heading: 'Need just wheels and muscle?',
     body: 'Our variety of trucks and veteran "Power Mike" crew are available for same state & Interstate runs, as well as "One-Load" moves',
@@ -131,7 +135,8 @@ export default function Services() {
               aria-controls={`tabpanel-${tab.id}`}
               onClick={() => setActiveId(tab.id)}
             >
-              {tab.label}
+              <span className="services__tab-label">{tab.label}</span>
+              <span className="services__tab-label-short">{tab.shortLabel}</span>
             </button>
           ))}
         </div>

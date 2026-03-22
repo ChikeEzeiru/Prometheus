@@ -416,16 +416,33 @@
   .hero__form {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    align-items: end;      /* baseline-align button with the inputs */
+    align-items: end;
     gap: 12px;
+    width: 100%;
+    min-width: 0;
   }
 
-  /* Reset flex sizing — grid takes over */
-  .hero__field { flex: unset; }
+  /* min-width:0 is the key fix — prevents grid children from
+     expanding beyond their column track */
+  .hero__field {
+    flex:      unset;
+    min-width: 0;
+    width:     100%;
+  }
+
+  /* Also constrain the combobox and its trigger inside the grid cell */
+  .hero__form .location-combobox,
+  .hero__form .hero__input-wrapper,
+  .hero__form .relocation-select {
+    min-width: 0;
+    width:     100%;
+    max-width: 100%;
+  }
 
   .hero__cta {
-    width:  100%;
-    height: 2.75rem;       /* match input height */
+    width:     100%;
+    height:    2.75rem;
+    min-width: 0;
   }
 }
 

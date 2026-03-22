@@ -15,36 +15,42 @@ const FEATURES = [
     icon: fragileIcon,
     title: 'Handled With Care',
     body: 'Every item is treated with the same attention — carefully packed with protective materials, secured in transit, and delivered safely to your new address.',
+    shortBody: 'Packed carefully, secured in transit, and delivered safely to your door.',
   },
   {
     id: 'professionals',
     icon: usersCheckIcon,
     title: 'Trusted Professionals',
     body: 'Our movers are trained, experienced, & dedicated to making your move smooth. You can trust them with even the most delicate items.',
+    shortBody: 'Trained, trusted movers you can rely on for even your most delicate items.',
   },
   {
     id: 'flexible',
     icon: puzzleIcon,
     title: 'Flexible Services',
     body: 'We understand no two moves are alike, so we offer solutions that range from quick, single-day jobs to full-service relocations with packing and setup.',
+    shortBody: 'From a single-day pickup to a full-service relocation — we fit your move.',
   },
   {
     id: 'affordable',
     icon: piggyBankIcon,
     title: 'Affordable Rates',
     body: "Moving shouldn't break the bank. We provide competitive, transparent pricing that ensures you know exactly what you're paying for.",
+    shortBody: "Transparent, competitive pricing. You always know exactly what you're paying.",
   },
   {
     id: 'delivery',
     icon: truckIcon,
     title: 'On-Time Delivery',
     body: "Time is valuable. We respect your schedule, arrive promptly, and complete moves within the agreed timeframe so you're never left waiting.",
+    shortBody: 'We arrive on time and finish within your agreed window. Every time.',
   },
   {
     id: 'support',
     icon: phoneIcon,
-    title: 'Responsive Customer Support',
+    title: 'Responsive Support',
     body: 'Questions, changes, or special requests? Our team is always a call or message away, ready to guide you at every stage of your move.',
+    shortBody: 'A call or message away at every stage of your move.',
   },
 ]
 
@@ -74,7 +80,10 @@ export default function Features() {
                 <img src={f.icon} alt="" aria-hidden="true" width="22" height="22" />
               </div>
               <h3 className="features__title">{f.title}</h3>
-              <p className="features__body">{f.body}</p>
+              <p className="features__body">
+                <span className="feat-body-full">{f.body}</span>
+                <span className="feat-body-short">{f.shortBody}</span>
+              </p>
             </li>
           ))}
         </ul>
