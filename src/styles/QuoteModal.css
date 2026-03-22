@@ -250,7 +250,7 @@
   transition:  border-color 0.15s, box-shadow 0.15s;
 }
 
-.qm-input::placeholder { color: #9DA4AE; }
+.qm-input::placeholder { color: var(--color-placeholder); }
 
 .qm-input:focus {
   border-color: var(--color-primary, #F63D68);
@@ -302,10 +302,10 @@
   box-shadow:   0 0 0 3px rgba(246, 61, 104, 0.12);
 }
 
-.qm-sel option[value=""] { color: #9DA4AE; }
+.qm-sel option[value=""] { color: var(--color-placeholder); }
 
 /* Placeholder state: applied when no value is selected */
-.qm-sel--empty { color: #9DA4AE; }
+.qm-sel--empty { color: var(--color-placeholder); }
 
 /* Icon variant: extra left padding to clear the leading icon */
 .qm-sel--icon { padding-left: 2.375rem; }
@@ -423,7 +423,7 @@
   font-size:   0.9375rem   !important;
 }
 
-.qm-body .hero__input::placeholder { color: #9DA4AE !important; }
+.qm-body .hero__input::placeholder { color: var(--color-placeholder) !important; }
 
 .qm-body .location-combobox__suggestions {
   z-index: 10;

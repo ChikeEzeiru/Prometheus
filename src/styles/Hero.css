@@ -241,7 +241,7 @@
 }
 
 .hero__input::placeholder {
-  color: var(--color-gray-400);
+  color: var(--color-placeholder);
 }
 
 /* =========================================================
@@ -266,7 +266,7 @@
 
 .relocation-select__placeholder {
   font-size: 0.9375rem;
-  color: var(--color-gray-400);
+  color: var(--color-placeholder);
   flex: 1;
 }
 
@@ -405,48 +405,55 @@
    RESPONSIVE
    ========================================================= */
 @media (max-width: 768px) {
+  /* svh respects the mobile browser chrome (address bar),
+     so the section never runs over the visible screen */
+  .hero { min-height: 100svh; }
+
   .hero__content {
-    padding: 0 20px 48px;
+    padding: 0 20px 1.75rem;
+    gap: 10px;
   }
 
-  .hero__headline    { font-size: 2.75rem; }
-  .hero__subheadline { font-size: 1.065rem; max-width: 100%; }
+  .hero__headline    { font-size: 2rem; line-height: 1.2; }
+  .hero__subheadline { font-size: 0.9375rem; max-width: 100%; }
 
-  /* 2×2 grid: [Current Location][New Location] / [Move Type][CTA] */
+  /* Labels hidden on mobile — placeholders carry the same info
+     and we reclaim ~22px × 3 fields = ~66px of vertical space  */
+  .hero__field-label { display: none; }
+
+  /* Full-width stacked form */
   .hero__form {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: end;
-    gap: 12px;
-    width: 100%;
-    min-width: 0;
+    display:        flex;
+    flex-direction: column;
+    align-items:    stretch;
+    gap:            8px;
+    width:          100%;
+    margin-top:     4px;
   }
 
-  /* min-width:0 is the key fix — prevents grid children from
-     expanding beyond their column track */
   .hero__field {
-    flex:      unset;
-    min-width: 0;
+    flex:      none;
     width:     100%;
+    min-width: 0;
   }
 
-  /* Also constrain the combobox and its trigger inside the grid cell */
   .hero__form .location-combobox,
   .hero__form .hero__input-wrapper,
   .hero__form .relocation-select {
-    min-width: 0;
-    width:     100%;
-    max-width: 100%;
+    width: 100%;
   }
 
   .hero__cta {
-    width:     100%;
-    height:    2.75rem;
-    min-width: 0;
+    width:       100%;
+    align-self:  stretch;
+    padding:     0;
   }
+
+  /* Compact social proof row */
+  .avatar-stack__item { width: 28px; height: 28px; }
 }
 
 @media (max-width: 480px) {
-  .hero__content  { padding: 0 16px 40px; }
-  .hero__headline { font-size: 2.25rem; }
+  .hero__content  { padding: 0 16px 1.25rem; gap: 8px; }
+  .hero__headline { font-size: 1.75rem; }
 }

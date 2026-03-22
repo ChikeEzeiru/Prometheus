@@ -77,7 +77,7 @@
 }
 
 .footer__input::placeholder {
-  color: #9DA4AE;
+  color: var(--color-placeholder);
 }
 
 .footer__subscribe-btn {
@@ -182,7 +182,7 @@
   font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #9DA4AE;
+  color: var(--color-placeholder);
   white-space: nowrap;
 }
 

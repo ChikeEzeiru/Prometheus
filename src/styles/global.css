@@ -19,6 +19,9 @@
   --color-gray-600: #525252;
   --color-gray-900: #111111;
 
+  /* Placeholder text — #6B7280 passes WCAG AA (4.6:1 on white) */
+  --color-placeholder: #6B7280;
+
   /* Star / rating colour */
   --color-star: #f59e0b;
 
