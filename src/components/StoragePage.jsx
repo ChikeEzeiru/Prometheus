@@ -159,34 +159,40 @@ const UNITS = [
 
 const FEATURES = [
   {
-    icon:  <IconCCTV />,
-    title: '24/7 CCTV & Security',
-    body:  'Armed guards, CCTV throughout, and individual unit alarms — your items are watched around the clock.',
+    icon:      <IconCCTV />,
+    title:     '24/7 CCTV & Security',
+    body:      'Armed guards, CCTV throughout, and individual unit alarms — your items are watched around the clock.',
+    shortBody: 'Armed guards, CCTV, and unit alarms keep watch day and night.',
   },
   {
-    icon:  <IconClimate />,
-    title: 'Climate-Controlled Units',
-    body:  'Protects your electronics, fabric, and wood from Lagos humidity and heat year-round.',
+    icon:      <IconClimate />,
+    title:     'Climate-Controlled Units',
+    body:      'Protects your electronics, fabric, and wood from Lagos humidity and heat year-round.',
+    shortBody: 'Shields electronics, fabric, and wood from Lagos heat and humidity.',
   },
   {
-    icon:  <IconAccess />,
-    title: 'Flexible Access',
-    body:  'Request your items with 48-hour notice. We deliver directly to your door — no trips needed.',
+    icon:      <IconAccess />,
+    title:     'Flexible Access',
+    body:      'Request your items with 48-hour notice. We deliver directly to your door — no trips needed.',
+    shortBody: 'Request items with 48-hour notice — delivered to your door.',
   },
   {
-    icon:  <IconShield />,
-    title: 'Insurance Included',
-    body:  'All stored items are covered against fire, theft, and water damage at no extra cost.',
+    icon:      <IconShield />,
+    title:     'Insurance Included',
+    body:      'All stored items are covered against fire, theft, and water damage at no extra cost.',
+    shortBody: 'Covered against fire, theft, and water damage at no extra cost.',
   },
   {
-    icon:  <IconClean />,
-    title: 'Clean, Pest-Free Facility',
-    body:  'Monthly fumigation and regular facility inspections keep your items in pristine condition.',
+    icon:      <IconClean />,
+    title:     'Clean, Pest-Free Facility',
+    body:      'Monthly fumigation and regular facility inspections keep your items in pristine condition.',
+    shortBody: 'Regular fumigation and inspections keep your items pristine.',
   },
   {
-    icon:  <IconTag />,
-    title: 'No Hidden Fees',
-    body:  'Your quote includes collection, storage, and one free delivery. What you see is what you pay.',
+    icon:      <IconTag />,
+    title:     'No Hidden Fees',
+    body:      'Your quote includes collection, storage, and one free delivery. What you see is what you pay.',
+    shortBody: 'Collection, storage, and one free delivery — no surprises.',
   },
 ]
 
@@ -329,7 +335,10 @@ export default function StoragePage() {
                   {feat.icon}
                 </div>
                 <h3 className="storage-feature__title">{feat.title}</h3>
-                <p className="storage-feature__body">{feat.body}</p>
+                <p className="storage-feature__body">
+                  <span className="feat-body-full">{feat.body}</span>
+                  <span className="feat-body-short">{feat.shortBody}</span>
+                </p>
               </div>
             ))}
           </div>

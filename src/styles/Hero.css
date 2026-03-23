@@ -7,11 +7,11 @@
 /* --- Section wrapper --- */
 .hero {
   position: relative;
-  z-index: 1;               /* Lets dropdown panels paint above subsequent sections */
+  z-index: 1; /* Lets dropdown panels paint above subsequent sections */
   min-height: 100vh;
   display: flex;
-  align-items: flex-end;    /* Push content toward the bottom of the section */
-  background-color: #000;   /* Fallback while video loads */
+  align-items: flex-end; /* Push content toward the bottom of the section */
+  background-color: #000; /* Fallback while video loads */
 }
 
 /* --- Background container ---
@@ -149,9 +149,9 @@
    ========================================================= */
 .hero__form {
   display: flex;
-  align-items: flex-end;  /* Align inputs and button on the same baseline */
+  align-items: flex-end; /* Align inputs and button on the same baseline */
   gap: 8px;
-  flex-wrap: wrap;        /* Wraps to a column on narrow viewports */
+  flex-wrap: wrap; /* Wraps to a column on narrow viewports */
   margin-top: 8px;
 }
 
@@ -160,7 +160,7 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  flex: 1 1 200px;        /* Grows equally; min width prevents cramping */
+  flex: 1 1 200px; /* Grows equally; min width prevents cramping */
 }
 
 /* --- Field label row --- */
@@ -191,7 +191,7 @@
   left: 50%;
   transform: translateX(-50%);
   /* Dark pill */
-  background-color: #1F2A37;
+  background-color: #1f2a37;
   color: #ffffff;
   font-size: 0.75rem;
   font-weight: 400;
@@ -208,13 +208,13 @@
 
 /* Downward arrow */
 .field-tooltip__bubble::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 100%;
   left: 50%;
   transform: translateX(-50%);
   border: 5px solid transparent;
-  border-top-color: #1F2A37;
+  border-top-color: #1f2a37;
 }
 
 .field-tooltip:hover .field-tooltip__bubble,
@@ -233,9 +233,15 @@
   height: 2.75rem;
 }
 
+/* Lock icon SVGs so they never shrink in narrow flex/grid cells */
+.hero__input-wrapper > svg {
+  flex-shrink: 0;
+}
+
 /* --- Text inputs --- */
 .hero__input {
   flex: 1;
+  min-width: 0; /* yields space to siblings — never pushes icon out */
   font-size: 0.9375rem;
   color: var(--color-gray-900);
 }
@@ -299,7 +305,7 @@
   padding: 12px 14px;
   font-size: 0.9375rem;
   font-weight: 400;
-  color: #1F2A37;
+  color: #1f2a37;
   cursor: pointer;
   transition: background-color 120ms ease;
 }
@@ -313,11 +319,11 @@
 }
 
 .relocation-select__option + .relocation-select__option {
-  border-top: 1px solid #F3F4F6;
+  border-top: 1px solid #f3f4f6;
 }
 
 .relocation-select__option:hover {
-  background-color: #F9FAFB;
+  background-color: #f9fafb;
 }
 
 .relocation-select__option--selected {
@@ -360,18 +366,18 @@
   padding: 12px 14px;
   font-size: 0.9375rem;
   font-weight: 400;
-  color: #1F2A37;
+  color: #1f2a37;
   cursor: pointer;
   transition: background-color 120ms ease;
 }
 
 .location-combobox__option + .location-combobox__option {
-  border-top: 1px solid #F3F4F6;
+  border-top: 1px solid #f3f4f6;
 }
 
 .location-combobox__option:hover,
 .location-combobox__option--active {
-  background-color: #F9FAFB;
+  background-color: #f9fafb;
 }
 
 /* ─── CTA Button ─── */
@@ -386,7 +392,8 @@
   font-weight: 600;
   border-radius: var(--radius-sm);
   white-space: nowrap;
-  transition: background-color var(--transition-base), transform var(--transition-base);
+  transition: background-color var(--transition-base),
+    transform var(--transition-base);
 
   /* Align button bottom with inputs */
   align-self: flex-end;
@@ -407,64 +414,109 @@
 @media (max-width: 768px) {
   /* svh respects the mobile browser chrome (address bar),
      so the section never runs over the visible screen */
-  .hero { min-height: 100svh; }
+  .hero {
+    min-height: 100svh;
+  }
 
   .hero__content {
     padding: 0 20px 1.75rem;
     gap: 10px;
   }
 
-  .hero__headline    { font-size: 2.375rem; line-height: 1.2; }
-  .hero__subheadline { font-size: 0.9375rem; max-width: 100%; }
+  .hero__headline {
+    font-size: 3rem;
+    line-height: 1.15;
+  }
+  .hero__subheadline {
+    font-size: 1.065rem;
+    max-width: 100%;
+  }
 
-  /* Full-width stacked form */
+  /* Mobile form: 2-column grid so the two location fields sit side-by-side */
   .hero__form {
-    display:        flex;
-    flex-direction: column;
-    align-items:    stretch;
-    gap:            10px;
-    width:          100%;
-    margin-top:     4px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem; /* row-gap and column-gap both 0.75rem */
+    width: 100%;
+    margin-top: 1.25rem; /* extra breathing room below social proof */
+  }
+
+  /* Relocation-type field and CTA button each span both columns */
+  .hero__form .hero__field:nth-child(3),
+  .hero__form .hero__cta {
+    grid-column: 1 / -1;
   }
 
   .hero__field {
-    flex:      none;
-    width:     100%;
+    flex: none;
+    width: 100%;
     min-width: 0;
-    position:  relative;
+    position: relative;
     /* No padding-top — label is absolutely positioned on the border */
   }
 
-  /* Floating label — sits ON the top border of the white input card.
-     White background "notches" through the border line, just like
-     Google's Material outlined text field.
-     Hidden at rest; fades in on focus or once a value exists.        */
+  /* Floating label — starts INSIDE the input (acts as placeholder at rest).
+     Rises to the notched border position on focus or when a value exists.
+     Uses the full Material Design float animation.                        */
   .hero__field-label {
-    display:        block;
-    position:       absolute;
-    top:            -0.5rem;      /* straddles the input's top border   */
-    left:           0.875rem;     /* aligns with the inner text padding  */
-    font-size:      0.6875rem;    /* 11 px — small but legible           */
-    font-weight:    600;
-    letter-spacing: 0.03em;
-    color:          #6B7280;
-    background:     #ffffff;
-    padding:        0 4px;
-    border-radius:  2px;
-    opacity:        0;
-    transition:     opacity 0.15s ease;
+    display: block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%); /* true vertical centre of the input */
+    left: 0.875rem; /* relocation-select (no left icon)  */
+    font-size: 0.875rem; /* matches input text at rest        */
+    font-weight: 400;
+    letter-spacing: normal;
+    color: #9ca3af; /* placeholder grey                  */
+    background: transparent;
+    padding: 0;
+    border-radius: 2px;
+    opacity: 1; /* always visible                    */
+    transition: top 0.2s ease, transform 0.2s ease, left 0.2s ease,
+      font-size 0.2s ease, font-weight 0.15s ease, color 0.2s ease,
+      background 0.15s ease, padding 0.15s ease;
     pointer-events: none;
-    white-space:    nowrap;
-    z-index:        3;
+    white-space: nowrap;
+    z-index: 3;
+  }
+
+  /* Location combobox fields have a pin icon (~16px) + 14px padding + 8px gap
+     = ~2.375rem before the text starts. Offset the resting label to match.   */
+  .hero__field:has(.location-combobox) .hero__field-label {
+    left: 2.5rem;
   }
 
   /* Tooltips are a hover affordance — irrelevant on touch screens */
-  .hero__field-label .field-tooltip { display: none; }
+  .hero__field-label .field-tooltip {
+    display: none;
+  }
 
-  /* Reveal when any child is focused OR a value has been entered */
+  /* Float to the notched border position when focused or has a value */
   .hero__field:focus-within .hero__field-label,
-  .hero__field--has-value   .hero__field-label {
-    opacity: 1;
+  .hero__field--has-value .hero__field-label {
+    top: -0.5rem;
+    transform: translateY(0);
+    left: 0.875rem; /* always snap to left border on float  */
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: #6b7280;
+    background: #ffffff;
+    padding: 0 4px;
+  }
+
+  /* Hide native input placeholder at rest — the floating label is the placeholder.
+     Once focused, the native placeholder re-appears as a subtle hint.    */
+  .hero__field:not(:focus-within):not(.hero__field--has-value)
+    input::placeholder {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  /* Hide the custom-select placeholder span at rest too */
+  .hero__field:not(:focus-within):not(.hero__field--has-value)
+    .relocation-select__placeholder {
+    color: transparent;
+    transition: color 0.15s ease;
   }
 
   .hero__form .location-combobox,
@@ -474,16 +526,25 @@
   }
 
   .hero__cta {
-    width:       100%;
-    align-self:  stretch;
-    padding:     0;
+    width: 100%;
+    align-self: stretch;
+    padding: 0;
   }
 
   /* Compact social proof row */
-  .avatar-stack__item { width: 28px; height: 28px; }
+  .avatar-stack__item {
+    width: 28px;
+    height: 28px;
+  }
 }
 
 @media (max-width: 480px) {
-  .hero__content  { padding: 0 16px 1.25rem; gap: 8px; }
-  .hero__headline { font-size: 2.375rem; }
+  .hero__content {
+    padding: 0 16px 1.25rem;
+    gap: 8px;
+  }
+  .hero__headline {
+    font-size: 2.875rem;
+    font-weight: 500;
+  }
 }

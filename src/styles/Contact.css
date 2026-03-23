@@ -225,11 +225,11 @@
 @media (max-width: 768px) {
   .cp-header     { padding: 3.35rem 0; }
   .cp-eyebrow    { font-size: 0.75rem; }
-  .cp-heading    { font-size: 1.75rem; }
+  .cp-heading    { font-size: 2.25rem; }
   .cp-subheading { font-size: 1.065rem; }
 
   .cp-body         { padding: 3.35rem 0; }
-  .cp-body__inner  { grid-template-columns: 1fr; gap: 2rem; }
+  .cp-body__inner  { grid-template-columns: 1fr; gap: 2.75rem; }
 
   .cp-form-wrap { padding: 1.25rem; }
   .cp-form-row  { grid-template-columns: 1fr; gap: 1rem; }
@@ -238,5 +238,5 @@
 }
 
 @media (max-width: 480px) {
-  .cp-heading { font-size: 1.5rem; }
+  .cp-heading { font-size: 2rem; }
 }

@@ -541,7 +541,7 @@
   /* Listing page header */
   .blog-header    { padding: 3.35rem 0; }
   .blog-eyebrow   { font-size: 0.75rem; }
-  .blog-heading   { font-size: 1.75rem; }
+  .blog-heading   { font-size: 2.25rem; }
   .blog-subheading { font-size: 1.0625rem; }
 
   /* Posts section */
@@ -568,12 +568,12 @@
   /* Grid: single column on mobile */
   .blog-grid {
     grid-template-columns: 1fr;
-    gap:                   1.25rem;
+    gap:                   2.75rem;   /* 44px */
     margin-top:            1.5rem;
   }
 
   /* Post page */
-  .post-header h1   { font-size: 1.75rem; }
+  .post-header h1   { font-size: 2.25rem; }
   .post-cover img   { height: 240px; border-radius: 0.75rem; }
   .post-cover       { padding: 0 1rem; }
   .post-lead        { font-size: 1.125rem; }

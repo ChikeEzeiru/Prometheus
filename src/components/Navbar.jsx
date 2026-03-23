@@ -131,8 +131,9 @@ export default function Navbar({ solid = false, onHome, onContact, onBlog, onSto
   const [activeLink,   setActiveLink]   = useState('Home')
   const [scrolled,     setScrolled]     = useState(false)
   const [menuOpen,     setMenuOpen]     = useState(false)
-  const [dropdownOpen, setDropdownOpen] = useState(false)
-  const [dropdownIdx,  setDropdownIdx]  = useState(null)
+  const [dropdownOpen,          setDropdownOpen]          = useState(false)
+  const [dropdownIdx,           setDropdownIdx]           = useState(null)
+  const [mobileRelocationOpen,  setMobileRelocationOpen]  = useState(false)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10)
@@ -140,9 +141,10 @@ export default function Navbar({ solid = false, onHome, onContact, onBlog, onSto
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Prevent body scroll when mobile menu is open
+  // Prevent body scroll when mobile menu is open; collapse sub-menu on close
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
+    if (!menuOpen) setMobileRelocationOpen(false)
     return () => { document.body.style.overflow = '' }
   }, [menuOpen])
 
@@ -205,11 +207,9 @@ export default function Navbar({ solid = false, onHome, onContact, onBlog, onSto
                     onMouseEnter={() => setDropdownOpen(true)}
                     onMouseLeave={() => { setDropdownOpen(false); setDropdownIdx(null) }}
                   >
-                    <a
-                      href={href}
-                      className={`navbar__link${isActive ? ' navbar__link--active' : ''}`}
-                      onClick={e => handleLinkClick(e, label)}
-                      aria-current={isActive ? 'page' : undefined}
+                    <button
+                      type="button"
+                      className={`navbar__link navbar__link--trigger`}
                       aria-haspopup="true"
                       aria-expanded={dropdownOpen}
                     >
@@ -219,11 +219,7 @@ export default function Navbar({ solid = false, onHome, onContact, onBlog, onSto
                           <ChevronDown />
                         </span>
                       </span>
-                      <span
-                        className={`navbar__pill${isActive ? ' navbar__pill--visible' : ''}`}
-                        aria-hidden="true"
-                      />
-                    </a>
+                    </button>
 
                     {/* ── Mega dropdown ── */}
                     <div
@@ -290,7 +286,7 @@ export default function Navbar({ solid = false, onHome, onContact, onBlog, onSto
                   >
                     <span className="navbar__link-label">
                       {label}
-                      {badge && !isActive && (
+                      {badge && (
                         <span className="navbar__new-badge">{badge}</span>
                       )}
                     </span>
@@ -325,19 +321,60 @@ export default function Navbar({ solid = false, onHome, onContact, onBlog, onSto
         role="dialog"
         aria-label="Mobile navigation"
       >
-        {NAV_LINKS.map(({ label, href, badge }) => (
-          <a
-            key={label}
-            href={href}
-            className={`navbar__mobile-link${activeLink === label ? ' navbar__mobile-link--active' : ''}`}
-            onClick={e => handleLinkClick(e, label)}
-          >
-            {label}
-            {badge && activeLink !== label && (
-              <span className="navbar__new-badge">{badge}</span>
-            )}
-          </a>
-        ))}
+        {NAV_LINKS.map(({ label, href, badge, hasDropdown }) => {
+          if (hasDropdown) {
+            return (
+              <div key={label} className="navbar__mobile-accordion">
+                <button
+                  type="button"
+                  className="navbar__mobile-link navbar__mobile-link--accordion"
+                  onClick={() => setMobileRelocationOpen(o => !o)}
+                  aria-expanded={mobileRelocationOpen}
+                >
+                  <span>{label}</span>
+                  <span className={`navbar__chevron${mobileRelocationOpen ? ' navbar__chevron--open' : ''}`}>
+                    <ChevronDown />
+                  </span>
+                </button>
+
+                <div
+                  className={`navbar__mobile-submenu${mobileRelocationOpen ? ' navbar__mobile-submenu--open' : ''}`}
+                  aria-hidden={!mobileRelocationOpen}
+                >
+                  {RELOCATION_ITEMS.map(item => (
+                    <button
+                      key={item.tabId}
+                      type="button"
+                      className="navbar__mobile-subitem"
+                      onClick={() => {
+                        setMenuOpen(false)
+                        setMobileRelocationOpen(false)
+                        onRelocationClick?.(item.tabId)
+                      }}
+                    >
+                      <span className="navbar__mobile-subitem__icon">{item.icon}</span>
+                      <span className="navbar__mobile-subitem__label">{item.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )
+          }
+
+          return (
+            <a
+              key={label}
+              href={href}
+              className={`navbar__mobile-link${activeLink === label ? ' navbar__mobile-link--active' : ''}`}
+              onClick={e => handleLinkClick(e, label)}
+            >
+              {label}
+              {badge && (
+                <span className="navbar__new-badge">{badge}</span>
+              )}
+            </a>
+          )
+        })}
       </div>
     </>
   )
