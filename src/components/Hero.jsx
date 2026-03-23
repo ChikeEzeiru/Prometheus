@@ -50,7 +50,7 @@ function FieldTooltip({ tip }) {
 // `rating` is a float (e.g. 4.52); `max` is the total star count.
 function StarRating({ rating = 4.52, max = 5 }) {
   return (
-    <div className="star-rating" aria-label={`Rating: ${rating} out of ${max}`}>
+    <div className="star-rating" role="img" aria-label={`Rating: ${rating} out of ${max}`}>
       {Array.from({ length: max }, (_, i) => {
         // Determine fill level: full (1), half (0.5), or empty (0)
         const fill = Math.min(Math.max(rating - i, 0), 1)
@@ -94,7 +94,7 @@ const AVATARS = [
 
 function AvatarStack() {
   return (
-    <div className="avatar-stack" aria-label="Customer avatars">
+    <div className="avatar-stack" role="img" aria-label="Customer avatars">
       {AVATARS.map((src, i) => (
         <img
           key={i}
@@ -162,6 +162,7 @@ function RelocationSelect({ id, value, onChange }) {
         id={id}
         className="hero__input-wrapper relocation-select__trigger"
         role="combobox"
+        aria-label="Type of Relocation"
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-required="true"
