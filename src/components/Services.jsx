@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from 'react'
+import React, { useState, useRef, useLayoutEffect, useEffect } from 'react'
 import '../styles/Services.css'
 
 // ── Icons ──────────────────────────────────────────────────
@@ -91,8 +91,9 @@ const TABS = [
 ]
 
 // ── Component ───────────────────────────────────────────────
-export default function Services() {
-  const [activeId, setActiveId] = useState(TABS[0].id)
+export default function Services({ pendingServiceTab, onTabActivated }) {
+  const [activeId,  setActiveId]  = useState(TABS[0].id)
+  const [direction, setDirection] = useState('next') // 'next' = slide from right, 'prev' = slide from left
   const active = TABS.find(t => t.id === activeId)
 
   // Sliding tab indicator
@@ -105,8 +106,32 @@ export default function Services() {
     if (el) setSliderStyle({ left: el.offsetLeft, width: el.offsetWidth })
   }, [activeId])
 
+  // Deep-link from the nav dropdown: activate the requested tab then scroll here
+  useEffect(() => {
+    if (!pendingServiceTab) return
+    const oldIdx = TABS.findIndex(t => t.id === activeId)
+    const newIdx = TABS.findIndex(t => t.id === pendingServiceTab)
+    setDirection(newIdx >= oldIdx ? 'next' : 'prev')
+    setActiveId(pendingServiceTab)
+    // Small delay lets React paint the home page before we scroll
+    setTimeout(() => {
+      document.getElementById('services-section')
+        ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 80)
+    onTabActivated?.()
+  }, [pendingServiceTab])
+
+  // Tab click: determine slide direction from relative position
+  function selectTab(id) {
+    if (id === activeId) return
+    const oldIdx = TABS.findIndex(t => t.id === activeId)
+    const newIdx = TABS.findIndex(t => t.id === id)
+    setDirection(newIdx > oldIdx ? 'next' : 'prev')
+    setActiveId(id)
+  }
+
   return (
-    <section className="section services" aria-labelledby="services-heading">
+    <section id="services-section" className="section services" aria-labelledby="services-heading">
       <div className="container">
 
         {/* ── Section header ── */}
@@ -133,7 +158,7 @@ export default function Services() {
               className={`services__tab ${activeId === tab.id ? 'services__tab--active' : ''}`}
               aria-selected={activeId === tab.id}
               aria-controls={`tabpanel-${tab.id}`}
-              onClick={() => setActiveId(tab.id)}
+              onClick={() => selectTab(tab.id)}
             >
               <span className="services__tab-label">{tab.label}</span>
               <span className="services__tab-label-short">{tab.shortLabel}</span>
@@ -141,11 +166,12 @@ export default function Services() {
           ))}
         </div>
 
-        {/* ── Tab content ── */}
+        {/* ── Tab content — key forces remount on change so animation reruns ── */}
         <div
+          key={activeId}
           id={`tabpanel-${active.id}`}
           role="tabpanel"
-          className="services__content"
+          className={`services__content services__content--${direction}`}
         >
           {/* Left card */}
           <div className="services__card">

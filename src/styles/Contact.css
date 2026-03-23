@@ -67,14 +67,15 @@
 }
 
 .cp-info__icon {
-  flex-shrink:     0;
-  width:           2.5rem;
-  height:          2.5rem;
-  border-radius:   0.5rem;
-  background:      color-mix(in srgb, var(--color-primary) 8%, transparent);
-  display:         flex;
-  align-items:     center;
-  justify-content: center;
+  flex-shrink:      0;
+  width:            48px;
+  height:           48px;
+  background-color: var(--color-white);
+  border:           1px solid var(--color-gray-200);
+  border-radius:    var(--radius-sm);
+  display:          flex;
+  align-items:      center;
+  justify-content:  center;
 }
 
 .cp-info__text {

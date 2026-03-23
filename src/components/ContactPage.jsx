@@ -21,7 +21,7 @@ function PhoneIcon() {
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
       xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path d="M3.5 4.5C3.5 3.95 3.95 3.5 4.5 3.5H6.5L8 7.5L6.5 8.5C7.328 10.172 9.328 12.172 11 13L12 11.5L16 13V15C16 15.55 15.55 16 15 16C8.925 16 4 11.075 4 5C4 4.725 4.225 4.5 4.5 4.5H3.5Z"
-        stroke="#F63D68" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        stroke="#344054" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   )
 }
@@ -31,9 +31,9 @@ function MailIcon() {
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
       xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <rect x="2" y="4.5" width="16" height="11" rx="1.5"
-        stroke="#F63D68" strokeWidth="1.5"/>
+        stroke="#344054" strokeWidth="1.5"/>
       <path d="M2 7l8 5 8-5"
-        stroke="#F63D68" strokeWidth="1.5" strokeLinecap="round"/>
+        stroke="#344054" strokeWidth="1.5" strokeLinecap="round"/>
     </svg>
   )
 }
@@ -43,9 +43,9 @@ function MapPinIcon() {
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
       xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path d="M10 2C7.239 2 5 4.239 5 7c0 4 5 11 5 11s5-7 5-11c0-2.761-2.239-5-5-5z"
-        stroke="#F63D68" strokeWidth="1.5"/>
+        stroke="#344054" strokeWidth="1.5"/>
       <circle cx="10" cy="7" r="1.5"
-        stroke="#F63D68" strokeWidth="1.5"/>
+        stroke="#344054" strokeWidth="1.5"/>
     </svg>
   )
 }
@@ -55,9 +55,9 @@ function ClockIcon() {
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
       xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <circle cx="10" cy="10" r="7.5"
-        stroke="#F63D68" strokeWidth="1.5"/>
+        stroke="#344054" strokeWidth="1.5"/>
       <path d="M10 6.5V10.5L13 12"
-        stroke="#F63D68" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        stroke="#344054" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   )
 }

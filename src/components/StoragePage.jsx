@@ -7,6 +7,7 @@
 
 import React, { useState } from 'react'
 import Footer from './Footer'
+import Toast  from './Toast'
 import '../styles/Storage.css'
 
 // ── Feature icons ─────────────────────────────────────────
@@ -113,19 +114,22 @@ function IconTag() {
 
 const STEPS = [
   {
-    number: '1',
-    title:  'Tell us what you need',
-    body:   'Get a free quote based on the size and duration you need. No commitment required.',
+    image:    '/images/storage-step-1.avif',
+    imageAlt: 'Storage unit booking form',
+    title:    'Tell us what you need',
+    body:     'Get a free quote based on the size and duration you need. No commitment required.',
   },
   {
-    number: '2',
-    title:  'We collect from your door',
-    body:   'Our crew picks up your items and transports them safely to our facility — fully documented.',
+    image:    '/images/storage-step-2.avif',
+    imageAlt: 'Two Prometheus movers loading boxes into a van',
+    title:    'We collect from your door',
+    body:     'Our crew picks up your items and transports them safely to our facility — fully documented.',
   },
   {
-    number: '3',
-    title:  'Retrieve whenever you\'re ready',
-    body:   'Request a full delivery or specific items with 48 hours notice. We bring everything to you.',
+    image:    '/images/storage-step-3.avif',
+    imageAlt: 'Prometheus crew member at a customer\'s front door',
+    title:    "Retrieve whenever you're ready",
+    body:     'Request a full delivery or specific items with 48 hours notice. We bring everything to you.',
   },
 ]
 
@@ -211,7 +215,12 @@ const FAQS = [
 
 // ── StoragePage ───────────────────────────────────────────
 export default function StoragePage() {
-  const [openFaq, setOpenFaq] = useState(null)
+  const [openFaq,   setOpenFaq]   = useState(null)
+  const [showToast, setShowToast] = useState(false)
+
+  function handleComingSoon() {
+    setShowToast(true)
+  }
 
   function toggleFaq(index) {
     setOpenFaq(prev => (prev === index ? null : index))
@@ -235,12 +244,33 @@ export default function StoragePage() {
       {/* ── How it works ── */}
       <section className="storage-how">
         <div className="container">
-          <h2 className="storage-section-heading">How it works</h2>
+          <div className="storage-how__header">
+            <div className="storage-how__header-left">
+              <h2 className="storage-how__heading">How it works.</h2>
+              <p className="storage-how__sub">
+                From pickup to safe storage — we handle every step so your items
+                are exactly where you need them, exactly when you need them back.
+              </p>
+            </div>
+            <button
+              type="button"
+              className="storage-how__cta"
+              onClick={handleComingSoon}
+            >
+              Reserve a Unit <span aria-hidden="true">→</span>
+            </button>
+          </div>
+
           <div className="storage-steps">
             {STEPS.map((step) => (
-              <div key={step.number} className="storage-step">
-                <div className="storage-step__number" aria-hidden="true">
-                  {step.number}
+              <div key={step.title} className="storage-step">
+                <div className="storage-step__image-wrap">
+                  <img
+                    src={step.image}
+                    alt={step.imageAlt}
+                    className="storage-step__image"
+                    loading="lazy"
+                  />
                 </div>
                 <h3 className="storage-step__title">{step.title}</h3>
                 <p className="storage-step__body">{step.body}</p>
@@ -275,6 +305,7 @@ export default function StoragePage() {
                 <button
                   className={`storage-unit__cta${unit.popular ? ' storage-unit__cta--popular' : ''}`}
                   type="button"
+                  onClick={handleComingSoon}
                 >
                   Get Started
                 </button>
@@ -348,7 +379,7 @@ export default function StoragePage() {
           <div className="storage-cta-card">
             <h2>Ready to store?</h2>
             <p>Pick a plan above and reserve your unit today. Prices start from ₦25,000/month — no hidden fees.</p>
-            <button className="storage-cta-btn" type="button">
+            <button className="storage-cta-btn" type="button" onClick={handleComingSoon}>
               Reserve Your Unit
             </button>
           </div>
@@ -356,6 +387,13 @@ export default function StoragePage() {
       </section>
 
       <Footer />
+
+      <Toast
+        show={showToast}
+        onClose={() => setShowToast(false)}
+        title="Coming soon!"
+        message="Storage booking isn't live yet. We'll let you know as soon as it's ready."
+      />
     </div>
   )
 }

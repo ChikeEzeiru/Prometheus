@@ -3,6 +3,25 @@
    Tabbed section: section header → tab bar → two-col content
    ========================================================= */
 
+/* ── Tab content slide animations ── */
+@keyframes services-slide-from-right {
+  from { opacity: 0; transform: translateX(32px); }
+  to   { opacity: 1; transform: translateX(0);    }
+}
+
+@keyframes services-slide-from-left {
+  from { opacity: 0; transform: translateX(-32px); }
+  to   { opacity: 1; transform: translateX(0);     }
+}
+
+.services__content--next {
+  animation: services-slide-from-right 0.32s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.services__content--prev {
+  animation: services-slide-from-left 0.32s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
 /* ── Section header ── */
 .services__header {
   display: flex;

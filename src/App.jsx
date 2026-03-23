@@ -52,8 +52,9 @@ function resolveInitialPage() {
 }
 
 export default function App() {
-  const [page,          setPage]          = useState(resolveInitialPage)
-  const [currentPostId, setCurrentPostId] = useState(null)
+  const [page,             setPage]             = useState(resolveInitialPage)
+  const [currentPostId,    setCurrentPostId]    = useState(null)
+  const [pendingServiceTab, setPendingServiceTab] = useState(null)
 
   // Called by QuoteModal — quote data already in sessionStorage
   function goToBooking() {
@@ -69,6 +70,13 @@ export default function App() {
   }
 
   function goHome() {
+    setPage('home')
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }
+
+  // Navigate home then deep-link to a specific services tab
+  function goToServiceTab(tabId) {
+    setPendingServiceTab(tabId)
     setPage('home')
     window.scrollTo({ top: 0, behavior: 'instant' })
   }
@@ -110,6 +118,7 @@ export default function App() {
         onContact={goToContact}
         onBlog={goToBlog}
         onStorage={goToStorage}
+        onRelocationClick={goToServiceTab}
       />
       {onBooking ? (
         <BookingPage onBack={goHome} />
@@ -124,7 +133,10 @@ export default function App() {
       ) : (
         <>
           <Hero onBook={goToBooking} />
-          <Services />
+          <Services
+            pendingServiceTab={pendingServiceTab}
+            onTabActivated={() => setPendingServiceTab(null)}
+          />
           <Features />
           <Testimonials />
           <HowItWorks />

@@ -11,17 +11,17 @@
 
 /* ── Shared section heading ────────────────────────────── */
 .storage-section-heading {
-  font-size:     1.75rem;
-  font-weight:   700;
+  font-size:     2.25rem;
+  font-weight:   600;
+  line-height:   1.22;
   color:         #1F2A37;
   text-align:    center;
   margin:        0 0 2.5rem;
-  line-height:   1.25;
 }
 
 /* ── Page header ───────────────────────────────────────── */
 .storage-header {
-  background: #ffffff;
+  background: #F9FAFB;
   padding:    6rem 0;
 }
 
@@ -45,7 +45,7 @@
 .storage-subheading {
   font-size:   1.25rem;
   font-weight: 400;
-  line-height: 1.55;
+  line-height: 1.5;
   color:       #4D5761;
   max-width:   600px;
   margin:      0;
@@ -57,34 +57,95 @@
   background: #ffffff;
 }
 
+/* Header row: heading+sub left, CTA right */
+.storage-how__header {
+  display:         flex;
+  align-items:     flex-start;
+  justify-content: space-between;
+  gap:             2rem;
+  margin-bottom:   4rem; /* 64px */
+}
+
+.storage-how__header-left {
+  flex: 1;
+}
+
+.storage-how__heading {
+  font-size:     2.25rem;
+  font-weight:   600;
+  line-height:   1.22;
+  color:         #111927;
+  margin:        0 0 0.875rem;
+}
+
+.storage-how__sub {
+  font-size:   1.25rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color:       #4D5761;
+  margin:      0;
+  max-width:   52ch;
+}
+
+.storage-how__cta {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             0.25rem;
+  white-space:     nowrap;
+  flex-shrink:     0;
+  padding:         0;
+  background:      none;
+  border:          none;
+  cursor:          pointer;
+  font-size:       0.9375rem;
+  font-weight:     600;
+  color:           #111927;
+  text-decoration: none;
+  margin-top:      0.375rem; /* optical alignment with heading cap-height */
+  transition:      opacity 0.2s ease;
+}
+.storage-how__cta:hover { opacity: 0.65; }
+
+/* Steps grid: 3-column, image above text */
 .storage-steps {
   display:               grid;
   grid-template-columns: repeat(3, 1fr);
-  gap:                   2rem;
+  gap:                   1.75rem;
 }
 
 .storage-step {
-  text-align: center;
+  display:   flex;
+  flex-direction: column;
 }
 
-.storage-step__number {
-  display:         inline-flex;
-  align-items:     center;
-  justify-content: center;
-  width:           3rem;
-  height:          3rem;
-  border-radius:   50%;
-  background:      color-mix(in srgb, var(--color-primary) 10%, transparent);
-  color:           var(--color-primary);
-  font-size:       1.25rem;
-  font-weight:     700;
-  margin-bottom:   1.25rem;
+.storage-step__image-wrap {
+  width:         100%;
+  aspect-ratio:  1 / 1;
+  border-radius: 0.875rem;
+  overflow:      hidden;
+  margin-bottom: 1.25rem;
+  background:    #F3F4F6; /* fallback while image loads */
+}
+
+.storage-step__image {
+  width:      100%;
+  height:     100%;
+  object-fit: cover;
+  display:    block;
+}
+
+/* Form mockup — contain so the UI renders crisp, not stretched */
+.storage-step:first-child .storage-step__image-wrap {
+  background: #F3F4F6;
+}
+.storage-step:first-child .storage-step__image {
+  object-fit: contain;
 }
 
 .storage-step__title {
   font-size:     1.0625rem;
   font-weight:   600;
-  color:         #1F2A37;
+  color:         #111927;
   margin:        0 0 0.5rem;
   line-height:   1.4;
 }
@@ -103,10 +164,11 @@
 }
 
 .storage-section-sub {
-  font-size:   1rem;
+  font-size:   1.25rem;
+  font-weight: 400;
   color:       #6B7280;
   text-align:  center;
-  margin:      -1.5rem 0 0;
+  margin:      -1.5rem 0 4rem; /* 64px below to grid */
   line-height: 1.5;
 }
 
@@ -114,7 +176,6 @@
   display:               grid;
   grid-template-columns: repeat(3, 1fr);
   gap:                   1.5rem;
-  margin-top:            2rem;
 }
 
 .storage-unit {
@@ -235,6 +296,11 @@
 .storage-features {
   padding:    6rem 0;
   background: #ffffff;
+}
+
+/* 64px from "Why store" heading down to the feature cards */
+.storage-features .storage-section-heading {
+  margin-bottom: 4rem;
 }
 
 .storage-features__grid {
@@ -371,10 +437,11 @@
 }
 
 .storage-cta-card p {
-  font-size:   1.0625rem;
+  font-size:   1.25rem;
+  font-weight: 400;
   opacity:     0.75;
-  margin:      0.75rem 0 2rem;
-  line-height: 1.55;
+  margin:      0.75rem 0 4rem; /* 64px to button */
+  line-height: 1.5;
 }
 
 .storage-cta-btn {
@@ -415,11 +482,21 @@
 
   .storage-heading             { font-size: 1.75rem; }
   .storage-subheading          { font-size: 1.0625rem; }
-  .storage-section-heading     { font-size: 1.5rem; }
+  .storage-how__sub            { font-size: 1.0625rem; }
+  .storage-section-sub         { font-size: 1.0625rem; }
+  .storage-cta-card p          { font-size: 1.0625rem; }
+  .storage-section-heading     { font-size: 1.75rem; }
 
-  .storage-steps               { grid-template-columns: 1fr; }
+  .storage-steps               { grid-template-columns: 1fr; gap: 2rem; }
+  .storage-how__heading        { font-size: 1.75rem; }
+  .storage-how__header         { flex-direction: column; gap: 1rem; margin-bottom: 2.5rem; }
   .storage-units__grid         { grid-template-columns: 1fr; }
   .storage-features__grid      { grid-template-columns: repeat(2, 1fr); gap: 28px 20px; }
+
+  /* Gap drops from 64px → 40px on mobile */
+  .storage-section-sub                        { margin-bottom: 2.5rem; }
+  .storage-features .storage-section-heading  { margin-bottom: 2.5rem; }
+  .storage-cta-card p                         { margin-bottom: 2.5rem; }
 
   .storage-cta-card            { padding: 2.5rem 1.5rem; }
   .storage-cta-card h2         { font-size: 1.625rem; }
