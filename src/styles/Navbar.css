@@ -464,6 +464,10 @@
   align-self:   stretch;
 }
 
+.navbar__link--trigger .navbar__link-label {
+  margin-top: 2px;
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   .navbar__links     { display: none; }
