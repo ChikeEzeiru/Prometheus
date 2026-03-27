@@ -131,7 +131,10 @@
 
 /* Anchor point for absolute-positioned dropdown */
 .navbar__item--has-dropdown {
-  position: relative;
+  position:   relative;
+  align-self: stretch;   /* fill the full navbar height */
+  display:    flex;
+  align-items: stretch;
 }
 
 /*
@@ -453,10 +456,12 @@
 
 /* ── Desktop: button-style Relocation trigger ── */
 .navbar__link--trigger {
-  background:  none;
-  border:      none;
-  cursor:      default;   /* not a navigation target */
-  font-family: inherit;
+  background:   none;
+  border:       none;
+  cursor:       default;   /* not a navigation target */
+  font-family:  inherit;
+  height:       100%;      /* fill the stretched <li> */
+  align-self:   stretch;
 }
 
 /* ── Responsive ── */
